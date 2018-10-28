@@ -1,0 +1,28 @@
+{
+  "port": 5000,
+  "mongodb": {
+    "db": {
+      "nameDb": "muzikanto",
+      "uri": "mongodb://Muzikanto:Maxim0660463701@ds125322.mlab.com:25322/muzikanto"
+    }
+  },
+  "mongoose": {
+    "options": {
+      "promiseLibrary": "require('bluebird')",
+      "server": {
+        "socketOptions": {
+          "keepAlive": 1
+        }
+      }
+    }
+  },
+  "session": {
+    "secret": "12345",
+    "key": "secret",
+    "cookie": {
+      "path": "/",
+      "httpOnly": true,
+      "maxAge": null
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<% layout('../../views/layout/page.ejs') %>
+<div>
+    <h1><%- time_start %></h1>
+    <% for(var key in visits){ %>
+       <h2><%- key %>   <%-  visits[key] %></h2>
+    <% } %>
+</div>
+
+
+

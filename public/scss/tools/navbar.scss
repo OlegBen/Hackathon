@@ -1,0 +1,137 @@
+/* navbar */
+
+.navbar {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: stretch;
+  height: 92px;
+  > .brand {
+    font-size: 16px;
+    line-height: 92px;
+    > img {
+      vertical-align: middle;
+      width: 108px;
+      height: 27px;
+    }
+  }
+  > div {
+    > nav {
+      margin-left: 52px;
+      float: left;
+      > li {
+        list-style-type: none;
+        > .item {
+
+          display: block;
+          flex-shrink: 0;
+          text-transform: uppercase;
+          font-size: 16px;
+          font-weight: bold;
+          color: gray;
+        }
+        > .item.-link {
+          border-bottom: 5px solid transparent;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 1049px) {
+  /* nav */
+  .navbar {
+    > .brand {
+      margin-left: 20px;
+      > img {
+        height: 40px;
+      }
+    }
+    .mobileToggleNavbar {
+      float: right;
+      > img {
+        width: 16px;
+        height: 13px;
+      }
+    }
+    > .navbarContainer {
+      margin-left: auto;
+      line-height: 92px;
+      margin-right: 20px;
+      .navbarList {
+        position: absolute;
+        right: 20px;
+        top: 60px;
+        display: none;
+        z-index: 1;
+        > li {
+          height: 30px;
+          line-height: 30px;
+          text-align: right;
+        }
+      }
+      .navbarList > li > .item.-link.-active,
+      .navbarList > li > .item.-link:hover,
+      .navbarList > li > .item.-link:focus {
+        color: #000000;
+      }
+      .navbarRight{
+        margin-left: 0;
+        >li {
+          float: left;
+          margin-right: 20px;
+          > a {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    .navbarContainer:hover .navbarList {
+      display: block;
+    }
+  }
+
+}
+
+
+@media only screen and (min-device-width: 1050px) {
+  .navbar {
+    width: 100%;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.16), 0 2px 5px rgba(0, 0, 0, 0.01);
+    > .brand {
+      margin-left: 40px;
+      > img {
+        height: 27px;
+      }
+    }
+    > .list {
+      display: flex;
+    }
+    > div {
+      width:calc(100% - 200px);
+      > .mobileToggleNavbar {
+        display: none;
+      }
+      > nav {
+        > li {
+          line-height: 92px;
+          float: left;
+          > .item {
+            margin-right: 26px;
+          }
+        }
+      }
+      .navbarList > li > .item.-link.-active,
+      .navbarList > li > .item.-link:hover,
+      .navbarList > li > .item.-link:focus {
+        color: #000000;
+        border-bottom-color: #b7001b;
+      }
+      .navbarRight{
+        float: right;
+      }
+    }
+  }
+}
+
+

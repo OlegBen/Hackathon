@@ -1,0 +1,8 @@
+{
+  "name": "Hackathon Project",
+  "description": "Node.js app using Express 4",
+  "repository": "https://github.com/Muzikanto/Hackathon",
+  "logo": "",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}

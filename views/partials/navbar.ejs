@@ -1,0 +1,24 @@
+<navbar class="navbar">
+    <a href="/" class="brand"><img src="images/Яндекс%20Дом.svg"></a>
+    <div class="navbarContainer">
+        <div class="mobileToggleNavbar"><img src="images/assets/icon_list_m@2x.png"></div>
+        <nav class="navbarList">
+            <li><a href="#" class="item -link">Text</a></li>
+            <li><a href="#" class="item -link">Text</a></li>
+            <li><a href="#" class="item -link">Text</a></li>
+            <li><a href="#" class="item -link">Text</a></li>
+        </nav>
+        <nav class="navbarRight">
+            <% if(user) { %>
+            <li><a href="#" class="item -link"><span
+                            class="glyphicon glyphicon-user"></span><%- user.nick %></a></li>
+            <li ><a href="#" onclick=" $(document.body).append('<form method=POST id=logoutForm action=/logout>'); $('#logoutForm').submit();return false"
+                    class="item -link"><span
+                            class="glyphicon glyphicon-off"></span>Выйти</a></li>
+            <% } else { %>
+            <li><a href="/login" class="item -link">Войти</a></li>
+            <li><a href="/register" class="item -link">Регистрация</a></li>
+            <% } %>
+        </nav>
+    </div>
+</navbar>

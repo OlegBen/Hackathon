@@ -1,0 +1,22 @@
+<% layout('../../../views/layout/page.ejs') %>
+<link rel='stylesheet' href='/stylesheets/pages/registerPage.css'/>
+<form class="containerRegister" method="post">
+    <h1>Регистрация</h1>
+
+    <label id="nickLabel"></label>
+    <input id="nick" type="text" name="nick" placeholder="Enter nick" required>
+
+    <label id="emailLabel"></label>
+    <input id="email" type="text" name="email" placeholder="Enter email" required>
+
+    <label id="passwordLabel"></label>
+    <input id="password" type="password" name="password" placeholder="Enter Password" required>
+
+    <label id="password_repeatLabel"></label>
+    <input id="password_repeat" type="password" name="password_repeat" placeholder="Repeat Password" required>
+
+    <p>Запомнить меня <input type="checkbox" checked="checked"></p>
+    <div class="clearfix">
+        <button type="submit" class="signupbtn" data-loadint-text="Отпр.">Sign Up</button>
+    </div>
+</form>

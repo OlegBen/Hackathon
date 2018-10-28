@@ -1,0 +1,12 @@
+<% layout('../../../views/layout/page.ejs') %>
+<link rel='stylesheet' href='/stylesheets/pages/loginPage.css' />
+
+<form class="containerLogin" name="login-form" method="post">
+    <h1 class="login_text">Вход</h1>
+    <label id="emailLabel"></label>
+    <input id="email" type="text" name="email" placeholder="Введите email" required>
+    <label id="passwordLabel"></label>
+    <input id="password" type="password" placeholder="Введите пароль" name="password" required>
+    <p>Запомнить меня <input type="checkbox" checked="checked"></p>
+    <button type="submit" id="submit" class="signupbtn" data-loadint-text="Отпр.">Войти</button>
+</form>
