@@ -3,9 +3,11 @@
 # Start
 ```
 npm i
+npm start 
+ 
 npm run ts //Start typescript watcher `Backand files`
-npm run dev //Start webpack watcher `Frontend files`
-
+npm run dev //Start webpack development watcher `Frontend files`
+npm run prod //Start webpack production watcher `Frontend files`
 ```
 
 ## Tests
