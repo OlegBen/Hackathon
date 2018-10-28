@@ -1,11 +1,10 @@
-## Local App Listen [localhost:5000](http://localhost:5000/)
-
 # Start
 ```
 git clone https://github.com/Muzikanto/Hackathon.git
 npm i
 npm run dev
 npm start 
+listen on localhost:5000
  
 npm run ts //Start typescript watcher `Backand files`
 npm run dev //Start webpack development watcher `Frontend files`
