@@ -12,7 +12,8 @@
     "hermione": "./node_modules/.bin/hermione",
     "selenium": "./node_modules/.bin/selenium-standalone start",
     "ts": "./node_modules/.bin/tsc --module AMD --outFile ./tests/test_typescript.js --watch",
-    "dev": "./node_modules/.bin/webpack"
+    "dev": "./node_modules/.bin/webpack --mode development",
+    "prod": "./node_modules/.bin/webpack --mode production"
   },
   "dependencies": {
     "async": "^2.6.1",

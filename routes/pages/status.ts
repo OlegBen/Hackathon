@@ -1,6 +1,6 @@
 import express = require('express')
 
-import {RequestInfoProject} from '../../middleware/info_project'
+import {RequestInfoProject} from '../../middleware/infoProject'
 let {visits} = require('../../middleware/visits');
 
 

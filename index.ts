@@ -6,7 +6,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     {notFoundPage, serverError} = require('./error/errors');
 
-app.use(require('./middleware/info_project'))
+app.use(require('./middleware/infoProject'))
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.static(path.join(__dirname, 'bower_components')))
     .engine('ejs', require('ejs-locals'))
@@ -33,4 +33,3 @@ const io = require('./socket/index')(server);
 app.set('io', io);
 
 module.exports = app;
-
