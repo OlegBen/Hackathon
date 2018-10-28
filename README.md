@@ -2,7 +2,9 @@
 
 # Start
 ```
+git clone https://github.com/Muzikanto/Hackathon.git
 npm i
+npm run dev
 npm start 
  
 npm run ts //Start typescript watcher `Backand files`
