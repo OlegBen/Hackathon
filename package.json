@@ -10,6 +10,7 @@
     "start": "ts-node index.ts",
     "test": "mocha tests/unit/*.test.js",
     "hermione": "./node_modules/.bin/hermione",
+    "herm-gui": "./node_modules/.bin/hermione gui",
     "selenium": "./node_modules/.bin/selenium-standalone start",
     "ts": "./node_modules/.bin/tsc --module AMD --outFile ./tests/test_typescript.js --watch",
     "dev": "./node_modules/.bin/webpack --mode development",

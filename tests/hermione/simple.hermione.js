@@ -1,6 +1,11 @@
-const {expect} = require("chai");
+const {expect} = require('chai');
 
 //Плохие примеры интег. тестов :(
+
+it('test', function () {
+    return this.browser
+        .url('/')
+});
 
 /*
 const {buildFolderUrl, buildFileUrl} = require("../utils/navigation");

@@ -1,10 +1,11 @@
 module.exports = {
     "sets": {
         "desktop": {
-            "files": './tests/hermione/*.hermione.js'
+            //"files": './tests/hermione/*.hermione.js'
+            "files": './tests/hermione/simple.hermione.js'
         }
     },
-    "baseUrl": 'http://localhost:3000',
+    "baseUrl": 'http://localhost:5000',
     "gridUrl": 'https://0.0.0.0:4444/wd/hub',
 
     "browsers": {
