@@ -43,8 +43,12 @@ module.exports = (env, opt) => {
                     use: [
                         MiniCssExtractPlugin.loader,
                         'css-loader',
-                        'sass-loader'
+                        'sass-loader',
                     ]
+                },
+                {
+                    test: /\.(jpe?g|png|gif|svg)$/,
+                    loader: require.resolve("file-loader") + "?name=../[path][name].[ext]"
                 }
             ]
         },

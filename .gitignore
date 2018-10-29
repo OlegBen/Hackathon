@@ -9,6 +9,7 @@ npm-debug.log
 .idea
 tests/test_typescript.js
 public/dist
+tests/hermione-html-report
 
 # Docker
 Dockerfile

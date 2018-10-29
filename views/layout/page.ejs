@@ -6,9 +6,12 @@
     <script src="dist/test.min.js" ></script>
 </head>
 <body>
-<main>
+<main class="page__wrapper">
+    <div class="page__wrapper-content">
     <% include ../partials/navbar.ejs %>
+
     <%- body %>
+    </div>
     <% include ../partials/footer.ejs %>
 </main>
 </body>

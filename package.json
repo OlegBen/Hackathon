@@ -38,6 +38,7 @@
     "@types/socket.io": "^1.4.38",
     "chai": "^4.2.0",
     "css-loader": "^1.0.0",
+    "file-loader": "^2.0.0",
     "hermione": "^0.90.1",
     "hermione-plugins-muz": "^1.0.4",
     "html-reporter": "^2.22.0",
