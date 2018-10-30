@@ -58,6 +58,6 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
   },
   "compileOnSave": false,
-  "exclude": [ "node_modules", "public" ],
+  "exclude": [ "node_modules", "tests"],
   "include": [ "**/*" ]
 }

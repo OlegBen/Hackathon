@@ -10,6 +10,7 @@ npm-debug.log
 tests/test_typescript.js
 public/dist
 tests/hermione-html-report
+*.js
 
 # Docker
 Dockerfile

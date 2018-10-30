@@ -1,4 +1,10 @@
-const {expect} = require("chai");
+import {expect} from 'chai'
+declare const it: Function;
+
+it("ParseHistoryItem, Парсинг коммита", () => {
+    expect(true).to.be.equal(false);
+});
+
 
 //Примеры юнит тестов
 

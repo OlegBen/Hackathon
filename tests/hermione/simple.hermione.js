@@ -1,11 +1,8 @@
 const {expect} = require('chai');
 
-//Плохие примеры интег. тестов :(
 
-it('test', function () {
-    return this.browser
-        .url('/')
-});
+
+//Плохие примеры интег. тестов :(
 
 /*
 const {buildFolderUrl, buildFileUrl} = require("../utils/navigation");

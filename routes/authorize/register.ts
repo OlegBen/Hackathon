@@ -13,11 +13,6 @@ function get(req: express.Request, res: express.Response, next: express.NextFunc
     });
 }
 
-
-
-
-
-
 function post(req: _RequestSession, res: express.Response, next: express.NextFunction) {
     const email = req.body.email;
     const password = req.body.password;

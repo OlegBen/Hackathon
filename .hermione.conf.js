@@ -1,8 +1,8 @@
 module.exports = {
     "sets": {
         "desktop": {
-            //"files": './tests/hermione/*.hermione.js'
-            "files": './tests/hermione/simple.hermione.js'
+            "files": './tests/hermione/*.hermione.js'
+            //"files": './tests/hermione/authorize.hermione.js'
         }
     },
     "baseUrl": 'http://localhost:5000',

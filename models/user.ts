@@ -1,6 +1,3 @@
-import {type} from "os";
-
-
 const crypto = require('crypto');
 const async = require('async');
 const mongoose = require('../lib/mongoose'),
@@ -56,7 +53,7 @@ schema.methods.checkPassword = function (password: string) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 
-schema.statics.register = function (nick: string, email: string, password: string, callback: string) {
+schema.statics.register = function (nick: string, email: string, password: string, callback: (e: Event) => void) {
     const User = this;
     async.waterfall([
         function (callback: (e: Event) => void) {
@@ -82,7 +79,7 @@ schema.statics.register = function (nick: string, email: string, password: strin
     ], callback);
 };
 
-schema.statics.authorize = function (email: string, password: string, callback: string) {
+schema.statics.authorize = function (email: string, password: string, callback: (e: Event) => void) {
     const User = this;
     async.waterfall([
         function (callback: (e: Event) => void) {
@@ -92,6 +89,28 @@ schema.statics.authorize = function (email: string, password: string, callback: 
             if (user) {
                 if (user.checkPassword(password))
                     callback(null, user);
+                else
+                    callback(new authError("Пароль неверен"))
+            }
+            else {
+                callback(new authError("Пользователь не найден"));
+            }
+        }
+    ], callback);
+};
+
+schema.statics.deleteUser = function (email: string, password: string, callback: (e: Event) => void) {
+    const User = this;
+    async.waterfall([
+        function (callback: (e: Event) => void) {
+            User.findOne({email: email}, callback);
+        },
+        function (user: any, callback: (e: Event | null, user?: any) => void) {
+            if (user) {
+                if (user.checkPassword(password))
+                {
+                    user.remove()
+                }
                 else
                     callback(new authError("Пароль неверен"))
             }
