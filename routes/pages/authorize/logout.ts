@@ -1,5 +1,5 @@
 import express = require('express')
-import {_RequestSession} from "../interfaces";
+import {_RequestSession} from "../../interfaces";
 
 function post(req: _RequestSession, res: express.Response, next: express.NextFunction) {
     const sid = req.session.id;

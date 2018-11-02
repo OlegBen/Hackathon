@@ -1,0 +1,69 @@
+<% layout('../../../views/layout/page.ejs') %>
+
+
+<style>
+    .create__vacancy-container {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+<form class="create__vacancy-container" method="post">
+    <label>Компания</label>
+    <input name="cv_company" required>
+
+    <label>Email</label>
+    <input name="cv_email" required>
+
+    <label>Вид занятости</label>
+    <input name="cv_type" required>
+
+    <label>Logo</label>
+    <input id="cv_loadLogo" type="file">
+    <input id="cv_createLogo" style="display: none" name="cv_logo">
+
+    <label>Ссылка</label>
+    <input name="cv_url">
+    <label>Должность</label>
+    <input name="cv_position" required>
+
+    <label>Локация</label>
+    <input name="cv_location" required>
+
+    <label>Категории</label>
+    <input name="cv_category" required>
+
+    <label>Описание</label>
+    <input name="cv_description" required>
+
+    <label>Собеседование</label>
+    <input name="cv_interview" required>
+
+    <label>Публичный или нет</label>
+    <input type="checkbox" name="cv_is_public">
+
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Create</button>
+</form>
+
+
+<script>
+    function loadImage(url, callback) {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                callback(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+    }
+    document.getElementById('cv_loadLogo').onchange =  () => {
+        loadImage(this.value, (data)=>{
+            console.log(data)
+        })
+    }
+
+</script>

@@ -15,8 +15,11 @@ npm run prod //Start webpack production watcher `Frontend files`
 ```
 npm i --global --production windows-build-tools 
 `run vpn`
+npm i -g selenium-standalone
 ./node_modules/.bin/selenium-standalone install
- 
+npm i -g hermione
+npm i hermione-plugins-muz
+
 npm run selenium
 npm start
 npm run hermione
