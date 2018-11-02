@@ -60,3 +60,5 @@ export interface  _Handshake extends  Handshake{
     session:_Session
     cookies:any
 }
+
+

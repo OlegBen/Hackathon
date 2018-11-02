@@ -4,6 +4,7 @@ const mongoose = require('../lib/mongoose'),
 const util = require('util');
 
 export interface _Vacancy {
+    _id?:string
     company: string
     type: string
     logo?: string
@@ -28,7 +29,7 @@ const schema = new Schema({
     url: {type: String},
     position: {type: String, required: true},
     location: {type: String, required: true},
-    category: {type: [], required: true},
+    category: {type: String, required: true},
     description: {type: String, required: true},
     interview: {type: String, required: true},
     isPublic: {type: Boolean, required: true},
@@ -52,12 +53,45 @@ schema.statics.create = function (data: _Vacancy, callback: (e: Event) => void) 
     ], callback);
 };
 
-schema.statics.getAll = function (userId: string, callback: (e: Event) => void) {
+schema.statics.getOne = function (_id: string, callback: (e: Event) => void) {
+    const Vacancy = this;
+    async.waterfall([
+        function (callback: (vacancy?: any) => void) {
+            Vacancy.findOne({_id: _id}, (err: Error, result: _Vacancy[]) => {
+                callback(result)
+            })
+        }
+    ], callback);
+};
+
+schema.statics.getAllForId = function (userId: string, callback: (e: Event) => void) {
     const Vacancy = this;
     async.waterfall([
         function (callback: (vacancy?: any) => void) {
             Vacancy.find({creatorId: userId}, (err: Error, result: _Vacancy[]) => {
                 callback(result)
+            })
+        }
+    ], callback);
+};
+
+schema.statics.getAllForPublic = function (callback: (e: Event) => void) {
+    const Vacancy = this;
+    async.waterfall([
+        function (callback: (vacancy?: any) => void) {
+            Vacancy.find({isPublic: true}, (err: Error, result: _Vacancy[]) => {
+                callback(result)
+            })
+        }
+    ], callback);
+};
+
+schema.statics.UpdateOne = function (vacancy:_Vacancy, callback: (e: Event) => void) {
+    const Vacancy = this;
+    async.waterfall([
+        function (callback: (vacancy?: any) => void) {
+            Vacancy.updateOne({_id: vacancy._id}, vacancy, (err: Error) => {
+                callback(vacancy)
             })
         }
     ], callback);

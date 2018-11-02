@@ -26,9 +26,11 @@ module.exports = (env, opt) => {
 
         entry: {
             userVacancys: './public/typescripts/pages/user/userVacancys.ts',
+            allVacancys: './public/typescripts/pages/allVacancys.ts',
 
             main: './public/scss/main.scss',
-            frontPage: './public/scss/pages/frontPage.scss'
+            frontPage: './public/scss/pages/frontPage.scss',
+            error: './public/scss/tools/error.scss',
         },
 
         module: {

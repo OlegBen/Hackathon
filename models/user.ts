@@ -3,6 +3,8 @@ const async = require('async');
 const mongoose = require('../lib/mongoose'),
     Schema = mongoose.Schema;
 const util = require('util');
+//const randtoken = require('rand-token');
+//randtoken.generate(24)
 const schema = new Schema({
     nick: {
         type: String,

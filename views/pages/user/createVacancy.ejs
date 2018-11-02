@@ -1,4 +1,4 @@
-<% layout('../../../views/layout/page.ejs') %>
+<% layout('../../layout/page.ejs') %>
 
 
 <style>
@@ -8,41 +8,52 @@
     }
 </style>
 
+
 <form class="create__vacancy-container" method="post">
+    <input name="cv_id" style="display: none" value="<%- vacancy._id %>">
+
     <label>Компания</label>
-    <input name="cv_company" required>
+    <input name="cv_company" value="<%- vacancy.company %>" required>
 
     <label>Email</label>
-    <input name="cv_email" required>
+    <input name="cv_email" value="<%- vacancy.email %>" required>
 
     <label>Вид занятости</label>
-    <input name="cv_type" required>
+    <input name="cv_type" value="<%- vacancy.type %>" required>
 
     <label>Logo</label>
     <input id="cv_loadLogo" type="file">
     <input id="cv_createLogo" style="display: none" name="cv_logo">
 
     <label>Ссылка</label>
-    <input name="cv_url">
+    <input name="cv_url" value="<%- vacancy.url %>">
+
     <label>Должность</label>
-    <input name="cv_position" required>
+    <input name="cv_position" value="<%- vacancy.position %>" required>
 
     <label>Локация</label>
-    <input name="cv_location" required>
+    <input name="cv_location" value="<%- vacancy.location %>" required>
 
     <label>Категории</label>
-    <input name="cv_category" required>
+    <input name="cv_category" value="<%- vacancy.category %>" required>
 
     <label>Описание</label>
-    <input name="cv_description" required>
+    <input name="cv_description" value="<%- vacancy.description %>" required>
 
     <label>Собеседование</label>
-    <input name="cv_interview" required>
+    <input name="cv_interview" value="<%- vacancy.interview %>" required>
+
+    <label>Состояние</label>
+    <input name="cv_state" value="<%- vacancy.state %>" required>
 
     <label>Публичный или нет</label>
+    <% if(vacancy.isPublic) { %>
+    <input type="checkbox" name="cv_is_public" checked>
+    <% } else { %>
     <input type="checkbox" name="cv_is_public">
+    <% } %>
 
-    <button id="submit" type="submit" data-loadint-text="Отпр.">Create</button>
+    <button id="submit" type="submit" data-loadint-text="Отпр."><%- buttonText %></button>
 </form>
 
 
@@ -60,10 +71,10 @@
         xhr.responseType = 'blob';
         xhr.send();
     }
-    document.getElementById('cv_loadLogo').onchange =  () => {
-        loadImage(this.value, (data)=>{
-            console.log(data)
-        })
-    }
 
+    document.getElementById('cv_loadLogo').onchange = () => {
+        loadImage(this.value, (data) => {
+            console.log(data);
+        });
+    };
 </script>

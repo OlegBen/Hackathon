@@ -17,4 +17,4 @@ function serverError(err: _ErrorStatus, req: express.Request, res: express.Respo
     });
 }
 
-module.exports = {notFoundPage, serverError}
+module.exports = {notFoundPage, serverError};

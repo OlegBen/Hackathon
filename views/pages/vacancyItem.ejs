@@ -1,0 +1,20 @@
+<% layout('../../views/layout/page.ejs') %>
+<% if(vacancy) { %>
+<p><%- vacancy.company %></p>
+<p><%- vacancy.type %></p>
+<p><%- vacancy.logo %></p>
+<p><%- vacancy.url %></p>
+<p><%- vacancy.position %></p>
+<p><%- vacancy.location %></p>
+<p><%- vacancy.category %></p>
+<p><%- vacancy.description %></p>
+<p><%- vacancy.interview %></p>
+<p><%- vacancy.isPublic %></p>
+<p><%- vacancy.email %></p>
+<p><%- vacancy.state %></p>
+<p><%- vacancy.created %></p>
+<p><%- vacancy.creatorId %></p>
+<p><%- vacancy.state %></p>
+<% } else { %>
+<p>Not Found</p>
+<% } %>

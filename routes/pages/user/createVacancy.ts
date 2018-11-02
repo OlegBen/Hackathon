@@ -6,24 +6,6 @@ const HttpError = require('../../../error/index').HttpError;
 const {vacancyError, Vacancy} = require('../../../models/vacancy');
 
 function get(req: _RequestUser, res: express.Response, next: express.NextFunction) {
-    const data = {
-        company: "Intel",
-        type: "Полная",
-        logo: "***",
-        url: "google.com",
-        position: "Разработчик",
-        location: "Симферополь",
-        category: ["Программист"],
-        description: "Описание",
-        interview: "Собеседование",
-        isPublic: true,
-        email: "example@gmail.com",
-        creatorId: req.user!._id,
-        state: "Актуально"
-    };
-    Vacancy.create(data, (vacancy: _Vacancy) => {
-    });
-
     /*
     Vacancy.delete('5bdc2d00bb20c61c14d3036a', function (err: Error, isDelete: Boolean) {
         if (err) {
@@ -35,11 +17,20 @@ function get(req: _RequestUser, res: express.Response, next: express.NextFunctio
     });
 
 */
-    res.render("pages/user/createVacancy", {});
+    res.render("pages/user/createVacancy", {
+        vacancy: {},
+        buttonText: 'Create'
+    });
 }
 
 function post(req: _RequestUser, res: express.Response, next: express.NextFunction) {
-    const data = {
+    const data = getDataFromReq(req);
+    Vacancy.create(data, (vacancy: _Vacancy) => {});
+    res.redirect('/user_page');
+}
+
+function getDataFromReq(req:_RequestUser){
+    return {
         company: req.body.cv_company,
         type: req.body.cv_type,
         logo: req.body.cv_logo,
@@ -52,11 +43,9 @@ function post(req: _RequestUser, res: express.Response, next: express.NextFuncti
         isPublic: req.body.cv_is_public === 'on' ? true : false,
         email: req.body.cv_email,
         creatorId: req.user!._id,
-        state: "Actual"
+        state: req.body.cv_state
     };
-    console.log(data);
-    //Vacancy.create(data, (vacancy: _Vacancy) => {});
-    res.redirect('/create_vacancy');
 }
 
-module.exports = {get, post};
+
+module.exports = {get, post, getDataFromReq};
