@@ -13,9 +13,9 @@ export interface _Vacancy {
     location: string
     category: string
     description: string
-    interview: string
     isPublic: Boolean
     email: string
+    phone?:string
 
     creatorId: string
     state: string
@@ -31,9 +31,9 @@ const schema = new Schema({
     location: {type: String, required: true},
     category: {type: String, required: true},
     description: {type: String, required: true},
-    interview: {type: String, required: true},
     isPublic: {type: Boolean, required: true},
     email: {type: String, required: true},
+    phone:{type:String},
 
     state: {type: String},
     created: {type: Date, default: Date.now},

@@ -1,0 +1,52 @@
+<% layout('../../layout/page.ejs') %>
+
+
+<style>
+    .create__resume-container {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+
+<form class="create__resume-container" method="post" action="/post_resume?_id=<%-resume._id%>&action=<%-actionForm%>">
+    <input name="rm_id" style="display: none" value="<%- resume._id %>">
+
+    <label>Имя</label>
+    <input name="rm_name" value="<%- resume.name %>" required>
+
+    <label>Возраст</label>
+    <input name="rm_age" value="<%- resume.age %>" type="number" required>
+
+    <label>Тип занятости</label>
+    <input name="rm_type" value="<%- resume.type %>" required>
+
+    <label>Должность</label>
+    <input name="rm_position" value="<%- resume.position %>" required>
+
+    <label>Локация</label>
+    <input name="rm_location" value="<%- resume.location %>" required>
+
+    <label>Категории</label>
+    <input name="rm_category" value="<%- resume.category %>" required>
+
+    <label>Описание</label>
+    <input name="rm_description" value="<%- resume.description %>" required>
+
+    <label>Email</label>
+    <input name="rm_email" value="<%- resume.email %>" required>
+
+    <label>Публичный или нет</label>
+    <% if(resume.isPublic) { %>
+    <input type="checkbox" name="rm_is_public" checked>
+    <% } else { %>
+    <input type="checkbox" name="rm_is_public">
+    <% } %>
+
+    <button id="submit" type="submit" data-loadint-text="Отпр."><%- buttonText %></button>
+</form>
+<% if(resume._id) {%>
+<form method="post" action="/post_resume?_id=<%-resume._id%>&action=delete">
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Delete</button>
+</form>
+<% }%>

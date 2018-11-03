@@ -9,6 +9,7 @@ export interface _EmptyObj {
 
 export interface _User {
     _id: string
+    email:string
 }
 
 export interface _AuthorizeData{

@@ -9,7 +9,7 @@
 </style>
 
 
-<form class="create__vacancy-container" method="post">
+<form class="create__vacancy-container" method="post" action="/post_vacancy?_id=<%- vacancy._id %>&action=<%-actionForm%>">
     <input name="cv_id" style="display: none" value="<%- vacancy._id %>">
 
     <label>Компания</label>
@@ -17,6 +17,9 @@
 
     <label>Email</label>
     <input name="cv_email" value="<%- vacancy.email %>" required>
+
+    <label>Phone</label>
+    <input name="cv_phone" value="<%- vacancy.phone %>">
 
     <label>Вид занятости</label>
     <input name="cv_type" value="<%- vacancy.type %>" required>
@@ -40,9 +43,6 @@
     <label>Описание</label>
     <input name="cv_description" value="<%- vacancy.description %>" required>
 
-    <label>Собеседование</label>
-    <input name="cv_interview" value="<%- vacancy.interview %>" required>
-
     <label>Состояние</label>
     <input name="cv_state" value="<%- vacancy.state %>" required>
 
@@ -54,6 +54,12 @@
     <% } %>
 
     <button id="submit" type="submit" data-loadint-text="Отпр."><%- buttonText %></button>
+</form>
+
+<form method="post" action="/post_vacancy?_id=<%- vacancy._id %>&action=delete">
+    <% if(vacancy._id) { %>
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Delete</button>
+    <% }%>
 </form>
 
 

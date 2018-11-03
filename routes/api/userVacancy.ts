@@ -13,3 +13,4 @@ function get(req: _RequestUser, res: express.Response, __: express.NextFunction)
 }
 
 module.exports = {get};
+

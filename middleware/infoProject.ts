@@ -1,29 +1,18 @@
 import express = require('express')
+import {_ServerSettings, ServerSettings} from "../models/serverSettings";
 
-export interface RequestInfoProject extends express.Request{
-    info_project: string
+export interface _RequetsSett extends express.Request {
+    server_sett: _ServerSettings
 }
 
-
-function toHHMMSS(value:string) {
-    const sec_num = parseInt(value, 10);
-    let hours:number | string   = Math.floor(sec_num / 3600);
-    let minutes:number | string = Math.floor((sec_num - (hours * 3600)) / 60);
-    let seconds:number | string = sec_num - (hours * 3600) - (minutes * 60);
-
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    if (seconds < 10) {seconds = "0"+seconds;}
-
-    return `${hours}:${minutes}:${seconds}`
-}
+let baseSettings = {myId: 0, vacancy: {days: 30, count: 10}, resume: {days: 30, count: 10}};
+ServerSettings.create(baseSettings);
 
 
-const date = toHHMMSS(process.uptime().toString());
-
-
-module.exports = function (req:RequestInfoProject, res:express.Response, next:express.NextFunction) {
-    req.info_project = res.locals.info_project =  `<p>${date}</p>`;
+module.exports = function (req: _RequetsSett, res: express.Response, next: express.NextFunction) {
+    ServerSettings.getOne((settings: _ServerSettings) => {
+        req.server_sett = settings;
+    });
     next()
 };
 

@@ -30,7 +30,7 @@ function post(req: _RequestSession, res: express.Response, next: express.NextFun
                 return next(err);
             }
         }
-        req.session.user = {_id:user._id};
+        req.session.user = {_id:user._id, email: user.email};
         res.redirect('/');
     });
 }

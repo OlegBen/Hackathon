@@ -27,6 +27,7 @@ module.exports = (env, opt) => {
         entry: {
             userVacancys: './public/typescripts/pages/user/userVacancys.ts',
             allVacancys: './public/typescripts/pages/allVacancys.ts',
+            allResumes: './public/typescripts/pages/allResumes.ts',
 
             main: './public/scss/main.scss',
             frontPage: './public/scss/pages/frontPage.scss',
