@@ -18,7 +18,7 @@ npm i --global --production windows-build-tools
 npm i -g selenium-standalone
 ./node_modules/.bin/selenium-standalone install
 npm i -g hermione
-npm i hermione-plugins-muz
+npm i -g hermione-plugins-muz
 
 npm run selenium
 npm start
