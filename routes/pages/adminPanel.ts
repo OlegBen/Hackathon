@@ -10,15 +10,19 @@ function get(req: _RequetsSett, res: express.Response, __: express.NextFunction)
 }
 
 function post(req: _RequetsSett, res: express.Response, __: express.NextFunction) {
+    const countV = parseInt(req.body.ss_vacancy_count);
+    const countR = parseInt(req.body.ss_resume_count);
+    const daysV = parseInt(req.body.ss_vacancy_days);
+    const daysR = parseInt(req.body.ss_resume_days);
     const settings = {
         myId: 0,
         vacancy: {
-            count: parseInt(req.body.ss_vacancy_count),
-            days: parseInt(req.body.ss_vacancy_days),
+            count: countV >= 3 && countV <= 40 ? countV : 10 ,
+            days:  daysV >= 7 && daysV <= 30 ? daysV : 15,
         },
         resume: {
-            count: parseInt(req.body.ss_resume_count),
-            days: parseInt(req.body.ss_resume_days),
+            count:  countR >= 3 && countR <= 40 ? countR : 10,
+            days:  daysR >= 7 && daysR <= 30 ? daysR : 15,
         }
     };
     ServerSettings.updateOne(settings, (err:Error)=>{

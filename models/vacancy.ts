@@ -18,7 +18,6 @@ export interface _Vacancy {
     phone?: string
 
     creatorId: string
-    state: string
     created: Date
     token?: string
 }
@@ -36,7 +35,6 @@ const schema = new Schema({
     email: {type: String, required: true},
     phone: {type: String},
 
-    state: {type: String},
     created: {type: Date, default: Date.now},
     creatorId: {type: String, required: true},
     token: {type: String}
@@ -59,20 +57,20 @@ schema.statics.getOne = function (_id: string, callback: (e: Event) => void) {
     const Vacancy = this;
     async.waterfall([
         function (callback: (vacancy?: any) => void) {
-            Vacancy.findOne({_id: _id},{
+            Vacancy.findOne({_id: _id}, {
                 company: true,
                 type: true,
-                url:true,
+                url: true,
                 logo: true,
                 position: true,
-                description:true,
+                description: true,
                 location: true,
                 category: true,
                 phone: true,
                 email: true,
                 state: true,
-                created:true,
-                creatorId:true
+                created: true,
+                creatorId: true
             }, (err: Error, result: _Vacancy[]) => {
                 callback(result)
             })
@@ -91,16 +89,31 @@ schema.statics.getAllForId = function (userId: string, callback: (e: Event) => v
     ], callback);
 };
 
-schema.statics.getPageForPublic = function (page: number = 0, countInPage: number, callback: (e: Event) => void) {
+interface _findAllForFilter {
+    isPublic: boolean
+    category?: string
+    location?: string
+}
+
+schema.statics.getPageForPublic = function (page: number = 0, filter: any, countInPage: number, callback: (e: Event) => void) {
     const Vacancy = this;
+    const findSettings: _findAllForFilter = {isPublic: true};
+    if (filter.category && filter.category !== 'undefined')
+        findSettings.category = filter.category;
+    if (filter.location && filter.location !== 'undefined')
+        findSettings.location = filter.location;
+
     async.waterfall([
-        function (callback: (vacancy: any) => void) {
-            Vacancy.find({isPublic: true}, {
+        function (callback: (e: Event) => void) {
+            Vacancy.count(findSettings, callback);
+        },
+        function (allCount: number, callback: (vacancy: any, allCount: number) => void) {
+            Vacancy.find(findSettings, {
                 company: true,
                 type: true,
                 logo: true,
                 position: true,
-                description:true,
+                description: true,
                 location: true,
                 category: true,
                 phone: true,
@@ -110,22 +123,12 @@ schema.statics.getPageForPublic = function (page: number = 0, countInPage: numbe
                 skip: page * countInPage,
                 limit: countInPage
             }, (err: Error, result: _Vacancy[]) => {
-                callback(result)
+                callback(result, Math.ceil(allCount / countInPage))
             })
         }
     ], callback);
 };
 
-schema.statics.getCountPublic = function (callback: (e: Event) => void) {
-    const Vacancy = this;
-    async.waterfall([
-        function (callback: (vacancy: any) => void) {
-            Vacancy.count({isPublic: true}, (err: Error, count: number) => {
-                callback(count)
-            });
-        }
-    ], callback);
-};
 
 schema.statics.UpdateOne = function (vacancy: _Vacancy, callback: (e: Event) => void) {
     const Vacancy = this;

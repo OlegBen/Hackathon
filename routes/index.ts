@@ -15,7 +15,7 @@ router.get('/register', require('./pages/authorize/register').get);
 
 router.get('/list_vacancy', require('./pages/all/listVacancy').get);                                /* Список вакансий */
 router.get('/list_vacancy/:id', require('./pages/all/vacancyItem').get);                            /* Вакансия */
-router.get('/create_vacancy', checkAuth, require('./pages/user/createVacancy').get);                /* Создание вакансии */
+router.get('/create_vacancy',  require('./pages/user/createVacancy').get);                /* Создание вакансии */
 
 router.get('/list_resume',  require('./pages/all/listResume').get);                                 /* Список резюме */
 router.get('/list_resume/:id',  require('./pages/all/resumeItem').get);                             /* Резюме */
@@ -37,6 +37,7 @@ router.post('/post_resume', checkAuth, require('./pages/user/createResume').post
 router.post('/login', require('./pages/authorize/login').post);
 router.post('/register', require('./pages/authorize/register').post);
 router.post('/logout', require('./pages/authorize/logout').post);
+
 
 
 module.exports = router;

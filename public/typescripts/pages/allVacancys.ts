@@ -1,4 +1,7 @@
-let vacancys = new Vue({
+import {createPageList} from "./listPages";
+
+// @ts-ignore
+const vacancys = new Vue({
     el: '#containerVacancy',
     data: {
         arr: []
@@ -14,29 +17,23 @@ let vacancys = new Vue({
                         <p>{{ v.category }}</p>
                         <p>{{ v.description }}</p>            
                         <p>{{ v.email }}</p>
-                        <p>{{ v.phone }}</p>
-                        <p>{{ v.state }}</p>
+                        <p>{{ v.phone }}</p>       
                         <a :href="'/list_vacancy/' + v._id"><div>Open</div></a>
                     </div>
                </div>`
 });
+const listPages = createPageList('containerListPages', loadPageVacancys);
 
+loadPageVacancys(0);
 
-(document.querySelectorAll('input[name="currentPageVacancy"]') as NodeListOf<HTMLInputElement>).forEach((el: HTMLElement) => {
-    el.addEventListener('change',()=>{
-        loadPageVacancys(parseInt((document.querySelector('input[name="currentPageVacancy"]:checked') as HTMLInputElement).value))
-    })
-});
-
-
-
-
-loadPageVacancys(parseInt((document.querySelector('input[name="currentPageVacancy"]:checked') as HTMLInputElement).value));
+let locationFilter: string | undefined;
+let categoryFilter: string | undefined;
 
 function loadPageVacancys(num: number) {
-    fetch(`/api/all_vacancy?page=${num}`)
+    fetch(`/api/all_vacancy?page=${num}&category=${categoryFilter}&location=${locationFilter}`)
         .then(response => response.json())
-        .then(function (arr) {
-            vacancys.arr = arr
+        .then(function (response: any) {
+            vacancys.arr = response.arr;
+            listPages.count = response.countPages;
         });
 }

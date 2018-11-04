@@ -1,3 +1,6 @@
+import {createPageList} from "./listPages";
+
+// @ts-ignore
 const resumes = new Vue({
     el: '#containerResumes',
     data:{arr: []},
@@ -12,19 +15,16 @@ const resumes = new Vue({
 });
 
 
-(document.querySelectorAll('input[name="currentPageResumes"]') as NodeListOf<HTMLInputElement>).forEach((el: HTMLElement) => {
-    el.addEventListener('change', () => {
-        loadPageResumes(parseInt((document.querySelector('input[name="currentPageResumes"]:checked') as HTMLInputElement).value))
-    })
-});
 
+let listPagesR = createPageList('containerListPages', loadPageResume);
 
-loadPageResumes(parseInt((document.querySelector('input[name="currentPageResumes"]:checked') as HTMLInputElement).value));
+loadPageResume(0);
 
-function loadPageResumes(num: number) {
+function loadPageResume(num: number) {
     fetch(`/api/all_resume?page=${num}`)
         .then(response => response.json())
-        .then(function (arr) {
-            resumes.arr = arr
+        .then(function (response:any) {
+            resumes.arr = response.arr;
+            listPagesR.count = response.countPages;
         });
 }

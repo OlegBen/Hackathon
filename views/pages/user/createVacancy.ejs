@@ -43,9 +43,6 @@
     <label>Описание</label>
     <input name="cv_description" value="<%- vacancy.description %>" required>
 
-    <label>Состояние</label>
-    <input name="cv_state" value="<%- vacancy.state %>" required>
-
     <label>Публичный или нет</label>
     <% if(vacancy.isPublic) { %>
     <input type="checkbox" name="cv_is_public" checked>

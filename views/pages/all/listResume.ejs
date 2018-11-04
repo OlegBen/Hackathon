@@ -3,12 +3,7 @@
 <div id="containerResumes"></div>
 
 
-<input type="radio" name="currentPageResumes" id="pageResumes0" value="0" checked>
-<label for="pageResumes0">Page 1</label>
-<% for(var i = 1; i < countResumePages; i++) { %>
-<input  type="radio" name="currentPageResumes" id="pageResumes<%- i %>" value="<%- i%>">
-<label for="pageResumes<%- i %>">Page <%- i + 1 %></label>
-<% } %>
+<div id="containerListPages"></div>
 
 
 <script src="/dist/allResumes.min.js"></script>

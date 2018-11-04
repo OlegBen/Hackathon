@@ -56,31 +56,29 @@ schema.statics.getOne = function (_id: string, callback: (e: Event) => void) {
     ], callback);
 };
 
+interface _findsettings {
+    isPublic: Boolean
+    category?: string
+}
 
 schema.statics.getPageForPublic = function (page: number = 0, countInPage: number, callback: (e: Event) => void) {
     const Resume = this;
+    const findSettings: _findsettings = {isPublic: true};
     async.waterfall([
-        function (callback: (resume?: any) => void) {
+        function (callback: (vacancy: any) => void) {
+            Resume.count(findSettings, callback);
+        },
+        function (allCount:number,callback: (resume: any, allCount:number) => void) {
             Resume.find({isPublic: true}, {}, {
                 skip: page * countInPage,
                 limit: countInPage
             }, (err: Error, result: _Resume[]) => {
-                callback(result)
+                callback(result, Math.ceil(allCount / countInPage))
             })
         }
     ], callback);
 };
 
-schema.statics.getCountPublic = function (callback: (e: Event) => void) {
-    const Resume = this;
-    async.waterfall([
-        function (callback: (vacancy: any) => void) {
-            Resume.count({isPublic: true}, (err: Error, count: number) => {
-                callback(count)
-            });
-        }
-    ], callback);
-};
 
 schema.statics.UpdateOne = function (resume: _Resume, callback: (e: Event) => void) {
     const Resume = this;
