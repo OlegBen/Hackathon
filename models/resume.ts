@@ -6,7 +6,7 @@ const util = require('util');
 export interface _Resume {
     _id?: string
     name: string
-    age:number
+    age: number
     type: string
     position: string
     location: string
@@ -57,13 +57,27 @@ schema.statics.getOne = function (_id: string, callback: (e: Event) => void) {
 };
 
 
-schema.statics.getAllForPublic = function (callback: (e: Event) => void) {
+schema.statics.getPageForPublic = function (page: number = 0, countInPage: number, callback: (e: Event) => void) {
     const Resume = this;
     async.waterfall([
         function (callback: (resume?: any) => void) {
-            Resume.find({isPublic: true}, (err: Error, result: _Resume[]) => {
+            Resume.find({isPublic: true}, {}, {
+                skip: page * countInPage,
+                limit: countInPage
+            }, (err: Error, result: _Resume[]) => {
                 callback(result)
             })
+        }
+    ], callback);
+};
+
+schema.statics.getCountPublic = function (callback: (e: Event) => void) {
+    const Resume = this;
+    async.waterfall([
+        function (callback: (vacancy: any) => void) {
+            Resume.count({isPublic: true}, (err: Error, count: number) => {
+                callback(count)
+            });
         }
     ], callback);
 };
@@ -71,15 +85,21 @@ schema.statics.getAllForPublic = function (callback: (e: Event) => void) {
 schema.statics.UpdateOne = function (resume: _Resume, callback: (e: Event) => void) {
     const Resume = this;
     async.waterfall([
-        function (callback: (resume?: any) => void) {
-            Resume.updateOne({_id: resume._id}, resume, (err: Error) => {
-                callback(resume)
-            })
+        function (callback: (e: Event) => void) {
+            Resume.findOne({_id: resume._id}, callback);
+        },
+        function (findResume: any, callback: (resume?: any) => void) {
+            if (findResume.creatorId == resume.creatorId) {
+                Resume.updateOne({_id: resume._id}, resume, (err: Error) => {
+                    callback(resume)
+                })
+            } else
+                callback(new resumeError("У вас нет прав"))
         }
     ], callback);
 };
 
-schema.statics.delete = function (_id: number, callback: (e: Event) => void) {
+schema.statics.delete = function (_id: string, userId: string, callback: (e: Event) => void) {
     const Resume = this;
     async.waterfall([
         function (callback: (e: Event) => void) {
@@ -87,8 +107,11 @@ schema.statics.delete = function (_id: number, callback: (e: Event) => void) {
         },
         function (resume: any, callback: (e: Event | null, isDelete?: Boolean) => void) {
             if (resume) {
-                resume.remove();
-                callback(null, true)
+                if (userId == resume.creatorId) {
+                    resume.remove();
+                    callback(null, true)
+                } else
+                    callback(new resumeError("У вас нет прав"))
             }
             else
                 callback(new resumeError("Резюме не найдено"));

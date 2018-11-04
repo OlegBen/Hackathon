@@ -6,7 +6,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     {notFoundPage, serverError} = require('./error/errors');
 
-app.use(require('./middleware/infoProject'))
+app.use(require('./middleware/projectSettings'))
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.static(path.join(__dirname, 'bower_components')))
     .engine('ejs', require('ejs-locals'))

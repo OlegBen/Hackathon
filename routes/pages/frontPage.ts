@@ -1,7 +1,9 @@
 import express = require('express')
+import {_RequetsSett} from "../../middleware/projectSettings";
 
 
-function get(_: express.Request, res: express.Response, __: express.NextFunction) {
+
+function get(req: _RequetsSett, res: express.Response, __: express.NextFunction) {
     res.render("pages/frontPage", {});
 }
 

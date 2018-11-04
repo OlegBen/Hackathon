@@ -9,12 +9,12 @@
 
 <form method="post">
     <label>Кол-во вакансий</label>
-    <input name="ss_vacancy_count" value=<%- server_sett.vacancy.count%> type="number">
+    <input name="ss_vacancy_count" value=<%- server_settings.vacancy.count%> type="number">
     <label>Жизнь вакансий</label>
-    <input name="ss_vacancy_days" value=<%- server_sett.vacancy.days%> type="number">
+    <input name="ss_vacancy_days" value=<%- server_settings.vacancy.days%> type="number">
     <label>Кол-во резюме</label>
-    <input name="ss_resume_count" value=<%- server_sett.resume.count%> type="number">
+    <input name="ss_resume_count" value=<%- server_settings.resume.count%> type="number">
     <label>Жизнь резюме</label>
-    <input name="ss_resume_days" value=<%- server_sett.resume.days%> type="number">
+    <input name="ss_resume_days" value=<%- server_settings.resume.days%> type="number">
     <button id="submit" type="submit" data-loadint-text="Отпр.">Update</button>
 </form>

@@ -1,11 +1,11 @@
 import express = require('express')
-import {_RequetsSett} from "../../middleware/infoProject";
+import {_RequetsSett} from "../../middleware/projectSettings";
 import {ServerSettings} from "../../models/serverSettings";
 
 
 function get(req: _RequetsSett, res: express.Response, __: express.NextFunction) {
     res.render("pages/adminPanel", {
-        server_sett: req.server_sett ? req.server_sett : {vacancy: {}, resume: {}}
+        server_settings: req.server_settings ? req.server_settings : {vacancy: {}, resume: {}}
     });
 }
 

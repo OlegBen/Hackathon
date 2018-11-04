@@ -8,7 +8,8 @@ const HttpError = require('../../../error/index').HttpError;
 function get(req: _RequestUser, res: express.Response, next: express.NextFunction) {
     Vacancy.getOne({_id: req.params.id}, (vacancy: _Vacancy) => {
         if (!vacancy) return next(new HttpError(404, "Вакансия не найдена"));
-        if (req.query.admin && req.query.admin === 'true' && req.user && req.user._id == vacancy.creatorId)
+        if ((req.query.admin && req.query.admin === 'true' && req.user && req.user._id == vacancy.creatorId) ||
+            (vacancy.token && req.query.token == vacancy.token))
             res.render("pages/user/createVacancy", {
                 vacancy,
                 buttonText: 'Update',

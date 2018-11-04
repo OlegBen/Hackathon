@@ -53,6 +53,13 @@
     <input type="checkbox" name="cv_is_public">
     <% } %>
 
+    <% if(!vacancy.token) { %>
+    <label>Сгенерировать токен ?</label>
+    <% } else { %>
+    <label>Обновить токен ?</label>
+    <% } %>
+    <input type="checkbox" name="cv_generate_token">
+
     <button id="submit" type="submit" data-loadint-text="Отпр."><%- buttonText %></button>
 </form>
 

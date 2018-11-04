@@ -1,6 +1,7 @@
 import {Session} from "inspector";
 import express = require('express')
 import {Handshake, Socket} from "socket.io";
+import {_RequetsSett} from "../middleware/projectSettings";
 
 export interface _EmptyObj {
     [key: string]: any
@@ -63,3 +64,4 @@ export interface  _Handshake extends  Handshake{
 }
 
 
+export interface _RequestSettUser extends _RequestUser, _RequetsSett{}

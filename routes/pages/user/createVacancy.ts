@@ -1,8 +1,9 @@
 import express = require('express')
-import {_Vacancy} from "../../../models/vacancy";
 import {_RequestUser} from "../../interfaces";
 
 const {Vacancy} = require('../../../models/vacancy');
+const randToken = require('rand-token');
+
 
 function get(req: _RequestUser, res: express.Response, next: express.NextFunction) {
     res.render("pages/user/createVacancy", {
@@ -17,26 +18,23 @@ function get(req: _RequestUser, res: express.Response, next: express.NextFunctio
 
 function post(req: _RequestUser, res: express.Response, _: express.NextFunction) {
     let data: any;
-    if (req.query.action != 'delete')
-        data = getDataFromReq(req);
-    switch (req.query.action) {
-        case 'delete':
-            Vacancy.delete(req.query._id, (_: Error, __: Boolean) => {
-            });
-            break;
-        case 'update':
-            // @ts-ignore
-            data._id = req.body.cv_id;
-            Vacancy.UpdateOne(data, (_: _Vacancy) => {
-            });
-            break;
-        case 'create':
-            Vacancy.create(data, (_: _Vacancy) => {
-            });
-            break;
+    if(req.user) {
+        if (req.query.action != 'delete')
+            data = getDataFromReq(req);
+        switch (req.query.action) {
+            case 'delete':
+                Vacancy.delete(req.query._id, req.user._id);
+                break;
+            case 'update':
+                data._id = req.body.cv_id;
+                Vacancy.UpdateOne(data);
+                break;
+            case 'create':
+                Vacancy.create(data);
+                break;
+        }
     }
-
-    res.redirect('/list_vacancy');
+    res.redirect('/user_page');
 }
 
 function getDataFromReq(req: _RequestUser) {
@@ -53,7 +51,8 @@ function getDataFromReq(req: _RequestUser) {
         email: req.body.cv_email,
         phone: req.body.cv_phone,
         creatorId: req.user!._id,
-        state: req.body.cv_state
+        state: req.body.cv_state,
+        token: req.body.cv_generate_token == 'on' ? randToken.generate(16) : ''
     };
 }
 

@@ -14,23 +14,24 @@ function get(req: _RequestUser, res: express.Response, __: express.NextFunction)
 }
 
 function post(req: _RequestUser, res: express.Response, _: express.NextFunction) {
-    let data: any;
-    if (req.query.action != 'delete')
-        data = getDataFromReq(req);
-    switch (req.query.action) {
-        case 'delete':
-            Resume.delete(req.query._id, (_: Error, __: Boolean) => {});
-            break;
-        case 'update':
-            data._id = req.body.rm_id;
-            Resume.UpdateOne(data, (resume: _Resume) => {});
-            break;
-        case 'create':
-            Resume.create(data, (_: _Resume) => {
-            });
-            break;
+    if(req.user) {
+        let data: any;
+        if (req.query.action != 'delete')
+            data = getDataFromReq(req);
+        switch (req.query.action) {
+            case 'delete':
+                Resume.delete(req.query._id, req.user._id);
+                break;
+            case 'update':
+                data._id = req.body.rm_id;
+                Resume.UpdateOne(data);
+                break;
+            case 'create':
+                Resume.create(data);
+                break;
+        }
     }
-    res.redirect('/list_resume');
+    res.redirect('/user_page');
 }
 
 function getDataFromReq(req:_RequestUser){

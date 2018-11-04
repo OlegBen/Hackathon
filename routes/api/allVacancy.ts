@@ -1,9 +1,9 @@
 import express = require('express')
-import {_RequestUser} from "../interfaces";
+import {_RequestSettUser} from "../interfaces";
 import {_Vacancy, Vacancy} from "../../models/vacancy";
 
-function get(_: _RequestUser, res: express.Response, __: express.NextFunction) {
-    Vacancy.getAllForPublic((arrVacancys: _Vacancy[]) => {
+function get(req: _RequestSettUser, res: express.Response, __: express.NextFunction) {
+    Vacancy.getPageForPublic(req.query.page, req.server_settings.vacancy.count, (arrVacancys: _Vacancy[]) => {
         res.send(JSON.stringify(arrVacancys));
     });
 }

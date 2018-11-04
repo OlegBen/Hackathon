@@ -1,7 +1,7 @@
 import express = require('express')
 import {_RequestUser} from "../../interfaces";
 
-function get(req: _RequestUser, res: express.Response, next: express.NextFunction) {
+function get(_: _RequestUser, res: express.Response, __: express.NextFunction) {
     res.render("pages/user/userPage", {});
 }
 

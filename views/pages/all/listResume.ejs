@@ -1,5 +1,15 @@
 <% layout('../../layout/page.ejs') %>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 <div id="containerResumes"></div>
+
+
+<input type="radio" name="currentPageResumes" id="pageResumes0" value="0" checked>
+<label for="pageResumes0">Page 1</label>
+<% for(var i = 1; i < countResumePages; i++) { %>
+<input  type="radio" name="currentPageResumes" id="pageResumes<%- i %>" value="<%- i%>">
+<label for="pageResumes<%- i %>">Page <%- i + 1 %></label>
+<% } %>
+
+
 <script src="/dist/allResumes.min.js"></script>
 
