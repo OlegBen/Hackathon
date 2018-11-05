@@ -17,7 +17,7 @@ function post(req: _RequetsSett, res: express.Response, __: express.NextFunction
     const settings = {
         myId: 0,
         vacancy: {
-            count: countV >= 3 && countV <= 40 ? countV : 10 ,
+            count: countV >= 1 && countV <= 40 ? countV : 10 ,
             days:  daysV >= 7 && daysV <= 30 ? daysV : 15,
         },
         resume: {
