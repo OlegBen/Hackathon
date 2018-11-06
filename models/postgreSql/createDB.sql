@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS Client (
     nick varchar(20) NOT NULL,
     email varchar(40) NOT NULL,
     hashedPassword varchar(50) NOT NULL,
+    salt varchar(100) NOT NULL,
 
     locationId bigint,
     FOREIGN KEY(locationId) REFERENCES Location(id),
