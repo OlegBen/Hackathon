@@ -16,6 +16,7 @@
       }
     }
   },
+  "postgresSql":"postgres://icpssnhvmdpzon:ebbbfef330eb2e55805919a9b007b3fd4a6e5a6b3433dc6b2a733bb08db05d43@ec2-79-125-14-195.eu-west-1.compute.amazonaws.com:5432/dcd6vknj3896b4",
   "session": {
     "secret": "12345",
     "key": "secret",
