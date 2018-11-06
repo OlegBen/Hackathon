@@ -9,9 +9,89 @@ const pool = new Pool({
 });
 
 function createALL() {
-    createTable('Test', [
-        'name VARCHAR(40)'
+    createTable('User', [
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'nick varchar(20)',
+        'email varchar(40)',
+        'hashedPassword varchar(50',
+
+        'countryId int unique',
+        'FOREIGN(countryId) REFERENCE Country(id)',
+        'cityId int unique',
+        'FOREIGN(cityId) REFERENCE City(id)',
+        'locationId int unique',
+        'FOREIGN(locationId) REFERENCE Location(id)',
+
+        'created date DEFAULT GETDATE()'
     ]);
+    createTable('Vacancy', [
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'company varchar(50)',
+        'type varchar(30)',
+        'logo varchar(1000)',
+        'url varchar(1000)',
+        'position varchar(100)',
+        'location ***',
+        'category ***',
+        'description text',
+        'isPublic BIT',
+        'email **',
+        'phone varchar(100)',
+        'token varchar(50)',
+        'created date DEFAULT GETDATE()'
+    ]);
+    createTable('Resume', [
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'name varchar(50)',
+        'age int(5)',
+        'type varchar(50)',
+        'position varchar(100)',
+        'location ***',
+        'category ***',
+        'description ***',
+        'isPublic BIT',
+        'email //',
+        'id_user **'
+    ]);
+    createTable('HistoryVacancy',[
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'isFavorite BIT',
+        'id_user ***',
+        'id_vacancy ***'
+    ]);
+    createTable('HistoryResume',[
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'isFavorite BIT',
+        'id_user ***',
+        'id_resume ***'
+    ]);
+    createTable('Country',[
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'name varchar(100)',
+        'FOREIGN KEY(id_city) REFERENCES City(id)'
+    ]);
+    createTable('City',[
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'name varchar(100)',
+        'id_location int',
+        'FOREIGN KEY(id_location) REFERENCES Location(id)'
+    ]);
+    createTable('Location',[
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'name varchar(100)',
+        'id_city int',
+        'FOREIGN KEY(id_city) REFERENCES City(id)',
+    ]);
+    createTable('Category',[
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'name varchar(50)'
+    ]);
+    createTable('SubCategory',[
+        'id int PRIMARY KEY AUTO_INCREMENT',
+        'name varchar(50)',
+        'id_link int',
+        'FOREIGN KEY(id_link) REFERENCES Category(id)'
+    ])
 }
 
 
