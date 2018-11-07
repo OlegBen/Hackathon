@@ -9,7 +9,7 @@ const resumes = new Vue({
                     <div v-for="v in arr">
                         <h1>{{ v.name }}</h1>
                         <p>{{ v.age }}</p>
-                        <a :href="'/list_resume/' + v._id"><div>Open</div></a>
+                        <a :href="'/list_resume/' + v.id"><div>Open</div></a>
                     </div>
                </div>`
 });

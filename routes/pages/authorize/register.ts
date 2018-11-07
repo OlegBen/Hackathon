@@ -2,7 +2,8 @@ import express = require('express')
 import {_Session, _RequestSession, _User} from '../../interfaces'
 
 
-const {authError, User} = require('../../../models/user');
+const User = require('../../../models/user');
+const {authError} =require('../../../models/base');
 const HttpError = require('../../../error/index').HttpError;
 
 const {checkValid} = require('../../../middleware/checkAuth');
@@ -30,7 +31,7 @@ function post(req: _RequestSession, res: express.Response, next: express.NextFun
                 return next(err);
             }
         }
-        req.session.user = {_id:user._id, email: user.email};
+        req.session.user = {id:user.id, email: user.email};
         res.redirect('/');
     });
 }

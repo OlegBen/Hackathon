@@ -1,7 +1,9 @@
 import express = require('express')
 import {_RequestSession, _User} from "../../interfaces";
 
-const {authError, User} = require('../../../models/user');
+
+const User = require('../../../models/user');
+const {authError} =require('../../../models/base');
 const HttpError = require('../../../error/index').HttpError;
 const {checkValid} = require('../../../middleware/checkAuth');
 
@@ -18,6 +20,7 @@ function post(req: _RequestSession, res: express.Response, next: express.NextFun
     let message = checkValid({password: password, email: email});
     if (message) return next(new HttpError(400, message));
 
+
     User.authorize(email, password, function (err: Error, user: _User) {
         if (err) {
             if (err instanceof authError) {
@@ -26,8 +29,8 @@ function post(req: _RequestSession, res: express.Response, next: express.NextFun
                 return next(err);
             }
         }
-        req.session.user = {_id:user._id, email: user.email};
-        res.redirect('/');
+        req.session.user = {id:user.id, email: user.email};
+
     });
 
 }

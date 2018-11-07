@@ -1,6 +1,6 @@
 import express = require('express')
 import {_RequetsSett} from "../../middleware/projectSettings";
-import {ServerSettings} from "../../models/serverSettings";
+import {ServerSettings} from "../../models/mongodb/serverSettings";
 
 
 function get(req: _RequetsSett, res: express.Response, __: express.NextFunction) {

@@ -1,7 +1,7 @@
 import express = require('express')
 import {_RequestUser} from "../../interfaces";
 
-const {Vacancy} = require('../../../models/vacancy');
+const Vacancy = require('../../../models/vacancy');
 const randToken = require('rand-token');
 
 
@@ -23,11 +23,10 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
             data = getDataFromReq(req);
         switch (req.query.action) {
             case 'delete':
-                Vacancy.delete(req.query._id, req.user._id);
+                Vacancy.delete(req.query.id, req.user.id);
                 break;
             case 'update':
-                data._id = req.body.cv_id;
-                Vacancy.UpdateOne(data);
+                Vacancy.updateOne(req.body.cv_id, data);
                 break;
             case 'create':
                 Vacancy.create(data);
@@ -44,14 +43,12 @@ function getDataFromReq(req: _RequestUser) {
         logo: req.body.cv_logo,
         url: req.body.cv_url,
         position: req.body.cv_position,
-        location: req.body.cv_location,
-        category: req.body.cv_category,
+        location_Id: null,
+        sub_category_id: null,
         description: req.body.cv_description,
-        isPublic: req.body.cv_is_public === 'on' ? true : false,
-        email: req.body.cv_email,
+        is_public: req.body.cv_is_public === 'on' ? 1 : 0,
         phone: req.body.cv_phone,
-        creatorId: req.user!._id,
-        state: req.body.cv_state,
+        creator_id: req.user!.id,
         token: req.body.cv_generate_token == 'on' ? randToken.generate(16) : ''
     };
 }

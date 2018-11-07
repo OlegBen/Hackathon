@@ -1,7 +1,10 @@
 import express = require('express')
-import {_Resume, Resume} from "../models/resume";
 import {_RequestUser} from "./interfaces";
-import {_Vacancy, Vacancy} from "../models/vacancy";
+
+
+const Vacancy = require('../models/vacancy');
+const Resume = require('../models/resume');
+
 
 const count = 20;
 function generateDataResumes(__: _RequestUser, _: express.Response, next: express.NextFunction) {

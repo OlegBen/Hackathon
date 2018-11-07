@@ -13,12 +13,12 @@ const vacancys = new Vue({
                         <p>{{ v.type }}</p>
                         <p>{{ v.logo }}</p>
                         <p>{{ v.position }}</p>
-                        <p>{{ v.location }}</p>
-                        <p>{{ v.category }}</p>
+                        <p>{{ v.location_id }}</p>
+                        <p>{{ v.sub_category_id }}</p>
                         <p>{{ v.description }}</p>            
                         <p>{{ v.email }}</p>
                         <p>{{ v.phone }}</p>       
-                        <a :href="'/list_vacancy/' + v._id"><div>Open</div></a>
+                        <a :href="'/list_vacancy/' + v.id"><div>Open</div></a>
                     </div>
                </div>`
 });

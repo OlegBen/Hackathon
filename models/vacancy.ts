@@ -1,187 +1,77 @@
-const async = require('async');
-const mongoose = require('../lib/mongoose'),
-    Schema = mongoose.Schema;
-const util = require('util');
+import {_Vacancy} from "./interfaces";
 
-export interface _Vacancy {
-    _id?: string
-    company: string
-    type: string
-    logo?: string
-    url?: string
-    position: string
-    location: string
-    category: string
-    description: string
-    isPublic: Boolean
-    email: string
-    phone?: string
+const {cbQuery, pool, authError} = require('./base');
 
-    creatorId: string
-    created: Date
-    token?: string
-}
+class Vacancy {
+    static create(data: _Vacancy) {
+        pool.query({
+            text: 'INSERT INTO Vacancy(company, type, url, logo, position, location_id, sub_category_id, description,' +
+            ' is_public,  creator_id, token) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)',
+            values: [data.company, data.type, data.url, data.logo, data.position, data.location_id, data.sub_category_id, data.description,
+                data.is_public, data.creator_id, data.token],
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+        });
+    }
 
-const schema = new Schema({
-    company: {type: String, required: true},
-    type: {type: String, required: true},
-    logo: {type: String},
-    url: {type: String},
-    position: {type: String, required: true},
-    location: {type: String, required: true},
-    category: {type: String, required: true},
-    description: {type: String, required: true},
-    isPublic: {type: Boolean, required: true},
-    email: {type: String, required: true},
-    phone: {type: String},
-
-    created: {type: Date, default: Date.now},
-    creatorId: {type: String, required: true},
-    token: {type: String}
-});
-
-schema.statics.create = function (data: _Vacancy, callback: (e: Event) => void) {
-    const Vacancy = this;
-    async.waterfall([
-        function (callback: (vacancy?: any) => void) {
-            const vacancy = new Vacancy(data);
-            vacancy.save(function (err: Error) {
-                if (err) return callback(err);
-                callback(vacancy)
-            })
+    static getAllPublicQuery(query: any, countInPage: number, callback: (vacancyArr: _Vacancy[], countInPage: number) => void) {
+        //page
+        //count
+        //query
+        //console.log(query);
+        let queryStr = 'SELECT *FROM Vacancy WHERE is_public = $1';
+        let queryVal = [1];
+        if (query.creator_id) {
+            queryStr += ' AND creator_id = $2';
+            queryVal.push(query.creator_id)
         }
-    ], callback);
-};
 
-schema.statics.getOne = function (_id: string, callback: (e: Event) => void) {
-    const Vacancy = this;
-    async.waterfall([
-        function (callback: (vacancy?: any) => void) {
-            Vacancy.findOne({_id: _id}, {
-                company: true,
-                type: true,
-                url: true,
-                logo: true,
-                position: true,
-                description: true,
-                location: true,
-                category: true,
-                phone: true,
-                email: true,
-                state: true,
-                created: true,
-                creatorId: true
-            }, (err: Error, result: _Vacancy[]) => {
-                callback(result)
-            })
-        }
-    ], callback);
-};
+        pool.query({
+            text: queryStr + ';',
+            values: queryVal,
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+            callback(result.rows, countInPage);
+        });
+    }
 
-schema.statics.getAllForId = function (userId: string, callback: (e: Event) => void) {
-    const Vacancy = this;
-    async.waterfall([
-        function (callback: (vacancy?: any) => void) {
-            Vacancy.find({creatorId: userId}, (err: Error, result: _Vacancy[]) => {
-                callback(result)
-            })
-        }
-    ], callback);
-};
-
-interface _findAllForFilter {
-    isPublic: boolean
-    category?: string
-    location?: string
-}
-
-schema.statics.getPageForPublic = function (page: number = 0, filter: any, countInPage: number, callback: (e: Event) => void) {
-    const Vacancy = this;
-    const findSettings: _findAllForFilter = {isPublic: true};
-    if (filter.category && filter.category !== 'undefined')
-        findSettings.category = filter.category;
-    if (filter.location && filter.location !== 'undefined')
-        findSettings.location = filter.location;
-
-    async.waterfall([
-        function (callback: (e: Event) => void) {
-            Vacancy.count(findSettings, callback);
-        },
-        function (allCount: number, callback: (vacancy: any, allCount: number) => void) {
-            Vacancy.find(findSettings, {
-                company: true,
-                type: true,
-                logo: true,
-                position: true,
-                description: true,
-                location: true,
-                category: true,
-                phone: true,
-                email: true,
-                state: true
-            }, {
-                skip: page * countInPage,
-                limit: countInPage
-            }, (err: Error, result: _Vacancy[]) => {
-                callback(result, Math.ceil(allCount / countInPage))
-            })
-        }
-    ], callback);
-};
-
-
-schema.statics.UpdateOne = function (vacancy: _Vacancy, callback: (e: Event) => void) {
-    const Vacancy = this;
-    async.waterfall([
-        function (callback: (e: Event) => void) {
-            Vacancy.findOne({_id: vacancy._id}, callback);
-        },
-        function (findVacancy: any, callback: (vacancy?: any) => void) {
-            if (findVacancy.creatorId == vacancy.creatorId) {
-                Vacancy.updateOne({_id: vacancy._id}, vacancy, (err: Error) => {
-                    callback(vacancy)
-                })
-            } else {
-                callback(new vacancyError("У вас нет прав"));
-            }
-        }
-    ], callback);
-};
-
-schema.statics.delete = function (_id: string, userId: string, callback: (e: Event) => void) {
-    const Vacancy = this;
-    async.waterfall([
-        function (callback: (e: Event) => void) {
-            Vacancy.findOne({_id: _id}, callback);
-        },
-        function (vacancy: any, callback: (e: Event | null, isDelete?: Boolean) => void) {
-            if (vacancy) {
-                if (vacancy.creatorId == userId) {
-                    vacancy.remove();
-                    callback(null, true)
-                } else
-                    callback(new vacancyError("У вас нет прав"));
-            }
+    static findById(id: number, callback: (vacancy: _Vacancy | null) => void) {
+        pool.query({
+            text: 'SELECT *FROM Vacancy WHERE id = $1;',
+            values: [id],
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+            if (result && result.rows.length > 0)
+                callback(result.rows[0]);
             else
-                callback(new vacancyError("Вакансия не найдена"));
-        }
-    ], callback);
-};
+                callback(null);
+        });
+    }
 
-export const Vacancy = mongoose.model('Vacancy', schema);
+    static updateOne(id: number, data:_Vacancy) {
 
-interface vacancyError extends Event {
-    message: string
+        pool.query({
+            text: 'UPDATE Vacancy SET company = $1 , type = $2 , url = $3 , logo = $4 , position = $5 , location_id = $6 , ' +
+            'sub_category_id = $7 , description = $8 , is_public = $9 , phone = $10 , token = $11  WHERE id = $12;',
+            values: [data.company, data.type, data.url, data.logo,
+                data.position, data.location_id, data.sub_category_id, data.description,
+                data.is_public, data.phone, data.token, id],
+        }, (err: Error, result: any) => {
+            if(err) console.log(err);
+            console.log(result)
+        });
+
+
+    }
+
+    static deleteOne(id: number) {
+        pool.query({
+            text: 'DELETE FROM Vacancy WHERE id = $1;',
+            values: [id],
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+        });
+    }
 }
 
-const vacancyError = function (this: vacancyError, message: string) {
-    Error.apply(this, arguments);
-    Error.captureStackTrace(this, vacancyError);
-    this.message = message
-} as  any as{ new (message: string): vacancyError; };
-
-util.inherits(vacancyError, Error);
-vacancyError.prototype.name = 'vacancyError';
-
-
-module.exports = {vacancyError, Vacancy};
+module.exports = Vacancy;

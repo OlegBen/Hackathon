@@ -2,7 +2,7 @@ namespace DataBasePG {
     const async = require('async');
     const util = require('util');
     const {Pool} = require('pg');
-    const config = require('../../config/config.json');
+    const config = require('../config/config.json');
 
 
     const connectionString = config.postgresSql;
@@ -23,6 +23,7 @@ namespace DataBasePG {
         }
 
         static createAllTables(callback: (e: Event) => void) {
+            console.log("Start create tables!");
             async.waterfall([
                 function (callback: () => void) {
                     cbQueryEmpty('CREATE TABLE IF NOT EXISTS Country(\n' +
@@ -52,11 +53,11 @@ namespace DataBasePG {
                         '    id SERIAL PRIMARY KEY,\n' +
                         '    nick varchar(20) NOT NULL,\n' +
                         '    email varchar(40) NOT NULL,\n' +
-                        '    hashedPassword varchar(50) NOT NULL,\n' +
+                        '    hashed_password varchar(50) NOT NULL,\n' +
                         '    salt varchar(100) NOT NULL,\n' +
                         '\n' +
-                        '    locationId bigint,\n' +
-                        '    FOREIGN KEY(locationId) REFERENCES Location(id),\n' +
+                        '    location_id bigint,\n' +
+                        '    FOREIGN KEY(location_id) REFERENCES Location(id),\n' +
                         '\n' +
                         '    role varchar(10),\n' +
                         '\n' +
@@ -86,21 +87,21 @@ namespace DataBasePG {
                         '    url varchar(1000),\n' +
                         '    position varchar(100),\n' +
                         '    description text,\n' +
-                        '    isPublic BIT,\n' +
+                        '    is_public BIT,\n' +
                         '\n' +
                         '    phone varchar(100),\n' +
                         '    token varchar(50),\n' +
                         '\n' +
                         '    created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n' +
                         '\n' +
-                        '    creatorId bigint  NOT NULL,\n' +
-                        '    FOREIGN KEY(creatorId) REFERENCES Client(id) ON DELETE CASCADE,\n' +
+                        '    creator_id bigint  NOT NULL,\n' +
+                        '    FOREIGN KEY(creator_id) REFERENCES Client(id) ON DELETE CASCADE,\n' +
                         '\n' +
-                        '    subCategoryId bigint,\n' +
-                        '    FOREIGN KEY(subCategoryId) REFERENCES SubCategory(id),\n' +
+                        '    sub_category_id bigint,\n' +
+                        '    FOREIGN KEY(sub_category_id) REFERENCES SubCategory(id),\n' +
                         '\n' +
-                        '    locationId bigint,\n' +
-                        '    FOREIGN KEY(locationId) REFERENCES Location(id)\n' +
+                        '    location_id bigint,\n' +
+                        '    FOREIGN KEY(location_id) REFERENCES Location(id)\n' +
                         ');', callback);
                 },
                 function (callback: () => void) {
@@ -112,14 +113,14 @@ namespace DataBasePG {
                         '    type varchar(50),\n' +
                         '    position varchar(100),\n' +
                         '    description text,\n' +
-                        '    isPublic BIT,\n' +
+                        '    is_public BIT,\n' +
                         '\n' +
-                        '    locationId bigint,\n' +
-                        '    FOREIGN KEY(locationId) REFERENCES Location(id),\n' +
+                        '    location_id bigint,\n' +
+                        '    FOREIGN KEY(location_id) REFERENCES Location(id),\n' +
                         '\n' +
-                        '    subCategoryId bigint,\n' +
-                        '    FOREIGN KEY(subCategoryId) REFERENCES SubCategory(id),\n' +
-                        '\n' +
+                        '    sub_category_id bigint,\n' +
+                        '    FOREIGN KEY(sub_category_id) REFERENCES SubCategory(id),\n' +
+                        '    creator_id bigint NOT NULL,\n' +
                         '    FOREIGN KEY(id) REFERENCES Client(id) ON DELETE CASCADE\n' +
                         ');', callback);
                 },
@@ -145,8 +146,11 @@ namespace DataBasePG {
                 }
             ], callback);
             console.log("All tables created!");
+            DB.showAllTables()
+                .then((result: any) => {
+                    console.log(result);
+                })
         }
-
     }
 
 
@@ -157,42 +161,11 @@ namespace DataBasePG {
         });
     }
 
-
-
-    function cbQuery(query: string | { text: string, values: any[] }, callback: (e:Event | null, result:any) => void) {
+    function cbQuery(query: string | { text: string, values: any[] }, callback: (e: Event | null, result: any) => void) {
         pool.query(query, (err: Error, result: any) => {
             if (err) console.log(err);
             callback(null, result.rows);
         });
-    }
-
-
-
-    class User {
-        static register(nick: string, email: string, password: string, callback: (e: Event) => void) {
-            async.waterfall([
-                function (callback: (e: Event | null) => void) {
-                    const query = {
-                        text: 'SELECT *FROM Client WHERE email = $1',
-                        values: [email],
-                    };
-                    cbQuery(query, callback)
-                },
-                function (data: any, callback: (e: Event | Error | null, result?:any) => void) {
-                    if (data.length != 0) {
-                        callback(new authError("Пользователь уже существует"));
-                    } else {
-                        pool.query({
-                            text: 'INSERT INTO Client(nick, email, hashedPassword, salt) VALUES($1, $2, $3, $4)',
-                            values: [nick, email, password, 'salt']
-                        }, (err: Error, result: any) => {
-                            if (err) console.log(err);
-                            callback(null, result.rows);
-                        });
-                    }
-                }
-            ], callback);
-        }
     }
 
 
@@ -205,15 +178,14 @@ namespace DataBasePG {
         Error.captureStackTrace(this, authError);
         this.message = message
     } as  any as{ new (message: string): authError; };
-
     util.inherits(authError, Error);
     authError.prototype.name = 'authError';
 
 
     module.exports = {
         pool,
+        cbQuery,
         DB,
-        User,
         authError
     };
 }

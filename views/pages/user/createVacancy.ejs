@@ -9,14 +9,14 @@
 </style>
 
 
-<form class="create__vacancy-container" method="post" action="/post_vacancy?_id=<%- vacancy._id %>&action=<%-actionForm%>">
-    <input name="cv_id" style="display: none" value="<%- vacancy._id %>">
+<form class="create__vacancy-container" method="post" action="/post_vacancy?id=<%- vacancy.id %>&action=<%-actionForm%>">
+    <input name="cv_id" style="display: none" value="<%- vacancy.id %>">
 
     <label>Компания</label>
     <input name="cv_company" value="<%- vacancy.company %>" required>
 
     <label>Email</label>
-    <input name="cv_email" value="<%- vacancy.email %>" required>
+    <input name="cv_email" value="<%- vacancy.email %>">
 
     <label>Phone</label>
     <input name="cv_phone" value="<%- vacancy.phone %>">
@@ -35,16 +35,16 @@
     <input name="cv_position" value="<%- vacancy.position %>" required>
 
     <label>Локация</label>
-    <input name="cv_location" value="<%- vacancy.location %>" required>
+    <input name="cv_location" value="<%- vacancy.location_id %>">
 
     <label>Категории</label>
-    <input name="cv_category" value="<%- vacancy.category %>" required>
+    <input name="cv_category" value="<%- vacancy.sub_category_id %>">
 
     <label>Описание</label>
     <input name="cv_description" value="<%- vacancy.description %>" required>
 
     <label>Публичный или нет</label>
-    <% if(vacancy.isPublic) { %>
+    <% if(vacancy.is_public == 1) { %>
     <input type="checkbox" name="cv_is_public" checked>
     <% } else { %>
     <input type="checkbox" name="cv_is_public">
@@ -60,8 +60,8 @@
     <button id="submit" type="submit" data-loadint-text="Отпр."><%- buttonText %></button>
 </form>
 
-<form method="post" action="/post_vacancy?_id=<%- vacancy._id %>&action=delete">
-    <% if(vacancy._id) { %>
+<form method="post" action="/post_vacancy?id=<%- vacancy.id %>&action=delete">
+    <% if(vacancy.id) { %>
     <button id="submit" type="submit" data-loadint-text="Отпр.">Delete</button>
     <% }%>
 </form>

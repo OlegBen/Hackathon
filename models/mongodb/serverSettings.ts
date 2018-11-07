@@ -1,5 +1,5 @@
 const async = require('async');
-const mongoose = require('../lib/mongoose'),
+const mongoose = require('../../lib/mongoose'),
     Schema = mongoose.Schema;
 
 export interface _ServerSettings {

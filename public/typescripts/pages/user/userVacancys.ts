@@ -9,7 +9,7 @@ let userData= new Vue({
                     <div v-for="v in arr">
                         <h1>{{ v.company }}</h1>
                         <p>{{ v.description }}</p>
-                        <a :href="'/list_vacancy/' + v._id + '?admin=true'"><div>Open</div></a>
+                        <a :href="'/list_vacancy/' + v.id + '?admin=true'"><div>Open</div></a>
                     </div>
                </div>`
 });

@@ -1,5 +1,5 @@
 import express = require('express')
-import {_ServerSettings, ServerSettings} from "../models/serverSettings";
+import {_ServerSettings, ServerSettings} from "../models/mongodb/serverSettings";
 
 export interface _RequetsSett extends express.Request {
     server_settings: _ServerSettings

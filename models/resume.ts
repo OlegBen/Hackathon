@@ -1,136 +1,61 @@
-const async = require('async');
-const mongoose = require('../lib/mongoose'),
-    Schema = mongoose.Schema;
-const util = require('util');
+import {_Resume} from "./interfaces";
 
-export interface _Resume {
-    _id?: string
-    name: string
-    age: number
-    type: string
-    position: string
-    location: string
-    category: string
-    description: string
-    isPublic: Boolean
-    email: string
+const {cbQuery, pool, authError} = require('./base');
 
-    creatorId: string
-}
+class Resume {
+    static create(data: any) {
 
-const schema = new Schema({
-    name: {type: String, required: true},
-    age: {type: Number, required: true},
-    type: {type: String, required: true},
-    position: {type: String, required: true},
-    location: {type: String, required: true},
-    category: {type: String, required: true},
-    description: {type: String, required: true},
-    isPublic: {type: Boolean, required: true},
-    email: {type: String, required: true},
+        pool.query({
+            text: 'INSERT INTO Resume(name,surname, age, type, position, location_id, sub_category_id, description,' +
+            ' is_public,   creator_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+            values: [data.name, data.surname, data.age, data.type, data.position, data.location_id, data.sub_category_id, data.description,
+                data.is_public,  data.creator_id],
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+        });
+    }
 
-    creatorId: {type: String, required: true}
-});
-
-schema.statics.create = function (data: _Resume, callback: (e: Event) => void) {
-    const Resume = this;
-    async.waterfall([
-        function (callback: (resume?: any) => void) {
-            const resume = new Resume(data);
-            resume.save(function (err: Error) {
-                if (err) return callback(err);
-                callback(resume)
-            })
+    static getAllPublicQuery(query:any,countInPage:number, callback: ( resumeArr: _Resume[], countInPage:number) => void) {
+        //page
+        //count
+        //query
+        let queryStr = 'SELECT *FROM Resume WHERE is_public = $1';
+        let queryVal = [1];
+        if(query.creatorId) {
+            queryStr += ' AND creator_id = $2';
+            queryVal.push(query.creator_id)
         }
-    ], callback);
-};
 
-schema.statics.getOne = function (_id: string, callback: (e: Event) => void) {
-    const Resume = this;
-    async.waterfall([
-        function (callback: (vacancy?: any) => void) {
-            Resume.findOne({_id: _id}, (err: Error, result: _Resume[]) => {
-                callback(result)
-            })
-        }
-    ], callback);
-};
+        pool.query({
+            text: queryStr + ';',
+            values: queryVal,
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+            callback( result.rows, countInPage);
+        });
+    }
 
-interface _findsettings {
-    isPublic: Boolean
-    category?: string
-}
-
-schema.statics.getPageForPublic = function (page: number = 0, countInPage: number, callback: (e: Event) => void) {
-    const Resume = this;
-    const findSettings: _findsettings = {isPublic: true};
-    async.waterfall([
-        function (callback: (vacancy: any) => void) {
-            Resume.count(findSettings, callback);
-        },
-        function (allCount:number,callback: (resume: any, allCount:number) => void) {
-            Resume.find({isPublic: true}, {}, {
-                skip: page * countInPage,
-                limit: countInPage
-            }, (err: Error, result: _Resume[]) => {
-                callback(result, Math.ceil(allCount / countInPage))
-            })
-        }
-    ], callback);
-};
-
-
-schema.statics.UpdateOne = function (resume: _Resume, callback: (e: Event) => void) {
-    const Resume = this;
-    async.waterfall([
-        function (callback: (e: Event) => void) {
-            Resume.findOne({_id: resume._id}, callback);
-        },
-        function (findResume: any, callback: (resume?: any) => void) {
-            if (findResume.creatorId == resume.creatorId) {
-                Resume.updateOne({_id: resume._id}, resume, (err: Error) => {
-                    callback(resume)
-                })
-            } else
-                callback(new resumeError("У вас нет прав"))
-        }
-    ], callback);
-};
-
-schema.statics.delete = function (_id: string, userId: string, callback: (e: Event) => void) {
-    const Resume = this;
-    async.waterfall([
-        function (callback: (e: Event) => void) {
-            Resume.findOne({_id: _id}, callback);
-        },
-        function (resume: any, callback: (e: Event | null, isDelete?: Boolean) => void) {
-            if (resume) {
-                if (userId == resume.creatorId) {
-                    resume.remove();
-                    callback(null, true)
-                } else
-                    callback(new resumeError("У вас нет прав"))
-            }
+    static findById(id: number, callback: (resume: _Resume | null) => void) {
+        pool.query({
+            text: 'SELECT *FROM Resume WHERE id = $1;',
+            values: [id],
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+            if (result && result.rows.length > 0)
+                callback(result.rows[0]);
             else
-                callback(new resumeError("Резюме не найдено"));
-        }
-    ], callback);
-};
+                callback(null);
+        });
+    }
 
-export const Resume = mongoose.model('Resume', schema);
-
-interface resumeError extends Event {
-    message: string
+    static deleteOne(id: number) {
+        pool.query({
+            text: 'DELETE FROM Resume WHERE id = $1;',
+            values: [id],
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+        });
+    }
 }
 
-const resumeError = function (this: resumeError, message: string) {
-    Error.apply(this, arguments);
-    Error.captureStackTrace(this, resumeError);
-    this.message = message
-} as  any as{ new (message: string): resumeError; };
-
-util.inherits(resumeError, Error);
-resumeError.prototype.name = 'resumeError';
-
-
-module.exports = {resumeError, Resume};
+module.exports = Resume;

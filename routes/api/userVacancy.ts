@@ -1,12 +1,15 @@
 import express = require('express')
-import {_RequestUser} from "../interfaces";
-import {_Vacancy, Vacancy} from "../../models/vacancy";
+import {_RequestSettUser, } from "../interfaces";
+import {_Vacancy} from "../../models/interfaces";
 
-function get(req: _RequestUser, res: express.Response, __: express.NextFunction) {
+
+const Vacancy = require('../../models/vacancy');
+
+function get(req: _RequestSettUser, res: express.Response, __: express.NextFunction) {
     const query = req.query;
     if (req.user && query.admin && query.admin == "true")
-        Vacancy.getAllForId(req.user._id, (result: _Vacancy[]) => {
-            res.send(JSON.stringify(result));
+        Vacancy.getAllPublicQuery({creator_id: req.user.id}, req.server_settings.vacancy.count, (arr: _Vacancy[], countPages: number) => {
+            res.send(JSON.stringify(arr));
         });
     else
         res.send(JSON.stringify("Fuck You"));

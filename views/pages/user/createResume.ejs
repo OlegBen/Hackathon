@@ -9,8 +9,8 @@
 </style>
 
 
-<form class="create__resume-container" method="post" action="/post_resume?_id=<%-resume._id%>&action=<%-actionForm%>">
-    <input name="rm_id" style="display: none" value="<%- resume._id %>">
+<form class="create__resume-container" method="post" action="/post_resume?id=<%-resume.id%>&action=<%-actionForm%>">
+    <input name="rm_id" style="display: none" value="<%- resume.id %>">
 
     <label>Имя</label>
     <input name="rm_name" value="<%- resume.name %>" required>
@@ -25,19 +25,19 @@
     <input name="rm_position" value="<%- resume.position %>" required>
 
     <label>Локация</label>
-    <input name="rm_location" value="<%- resume.location %>" required>
+    <input name="rm_location" value="<%- resume.location_id %>">
 
     <label>Категории</label>
-    <input name="rm_category" value="<%- resume.category %>" required>
+    <input name="rm_category" value="<%- resume.sub_category_id %>">
 
     <label>Описание</label>
     <input name="rm_description" value="<%- resume.description %>" required>
 
     <label>Email</label>
-    <input name="rm_email" value="<%- resume.email %>" required>
+    <input name="rm_email" value="<%- resume.email %>">
 
     <label>Публичный или нет</label>
-    <% if(resume.isPublic) { %>
+    <% if(resume.is_Public == 1) { %>
     <input type="checkbox" name="rm_is_public" checked>
     <% } else { %>
     <input type="checkbox" name="rm_is_public">
@@ -45,8 +45,8 @@
 
     <button id="submit" type="submit" data-loadint-text="Отпр."><%- buttonText %></button>
 </form>
-<% if(resume._id) {%>
-<form method="post" action="/post_resume?_id=<%-resume._id%>&action=delete">
+<% if(resume.id) {%>
+<form method="post" action="/post_resume?id=<%-resume.id%>&action=delete">
     <button id="submit" type="submit" data-loadint-text="Отпр.">Delete</button>
 </form>
 <% }%>

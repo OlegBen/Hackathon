@@ -1,7 +1,9 @@
 import express = require('express')
 import {_RequestUser} from "../../interfaces";
-import {_Resume, Resume} from "../../../models/resume";
 
+
+
+const Resume = require('../../../models/resume');
 
 function get(req: _RequestUser, res: express.Response, __: express.NextFunction) {
     res.render("pages/user/createResume", {
@@ -20,7 +22,7 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
             data = getDataFromReq(req);
         switch (req.query.action) {
             case 'delete':
-                Resume.delete(req.query._id, req.user._id);
+                Resume.delete(req.query.id, req.user.id);
                 break;
             case 'update':
                 data._id = req.body.rm_id;
@@ -37,15 +39,16 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
 function getDataFromReq(req:_RequestUser){
     return {
         name: req.body.rm_name,
+        surname:'surname',
         age: parseInt(req.body.rm_age),
         type: req.body.rm_type,
         position: req.body.rm_position,
-        location: req.body.rm_location,
-        category: req.body.rm_category,
+        location_id: null,
+        sub_category_id: null,
         description: req.body.rm_description,
-        isPublic: req.body.rm_is_public === 'on' ? true : false,
+        is_public: req.body.rm_is_public === 'on' ? 1 : 0,
         email: req.body.rm_email,
-        creatorId: req.user!._id
+        creator_id: req.user!.id
     }
 }
 
