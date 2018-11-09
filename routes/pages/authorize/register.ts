@@ -2,13 +2,14 @@ import express = require('express')
 import {_Session, _RequestSession, _User} from '../../interfaces'
 import User from "../../../models/user";
 import {authError} from "../../../models/base";
+import {HttpError} from "../../../error/index";
 
 
-const HttpError = require('../../../error/index').HttpError;
+
 
 const {checkValid} = require('../../../middleware/checkAuth');
 
-function get(req: express.Request, res: express.Response, next: express.NextFunction) {
+function get(_: express.Request, res: express.Response, __: express.NextFunction) {
     res.render("pages/authorize/register", {
         title: 'Register'
     });

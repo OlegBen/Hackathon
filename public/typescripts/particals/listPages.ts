@@ -1,4 +1,4 @@
-export function createPageList(id:string, loadPageFunc:Function){
+export function createPageList(id:string, loadList:Function){
     // @ts-ignore
     return new Vue({
         el: `#${id}`,
@@ -10,7 +10,7 @@ export function createPageList(id:string, loadPageFunc:Function){
         },
         methods: {
             loadPage() {
-                loadPageFunc(parseInt((document.querySelector('input[name="currentPage"]:checked') as HTMLInputElement).value));
+                loadList();
             },
             skipPagesIncr(this: any, v: number) {
                 if (v == -1 && this.skipPages > 0)

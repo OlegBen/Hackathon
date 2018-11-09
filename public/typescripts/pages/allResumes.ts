@@ -1,4 +1,4 @@
-import {createPageList} from "./listPages";
+import {createPageList} from "../particals/listPages";
 
 // @ts-ignore
 const resumes = new Vue({

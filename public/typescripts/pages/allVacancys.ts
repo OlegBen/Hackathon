@@ -1,4 +1,5 @@
-import {createPageList} from "./listPages";
+import {createPageList} from "../particals/listPages";
+import {createCategoryFilter} from "../particals/listCategory";
 
 // @ts-ignore
 const vacancys = new Vue({
@@ -21,18 +22,41 @@ const vacancys = new Vue({
                     </div>
                </div>`
 });
+
 const listPages = createPageList('containerListPages', loadPageVacancys);
 
-loadPageVacancys(1);
+const categoryFilterBlock = createCategoryFilter('containerListCategory', loadPageVacancys);
 
-let locationFilter: string | undefined;
-let categoryFilter: string | undefined;
 
-function loadPageVacancys(num: number) {
-    fetch(`/api/all_vacancy?page=${num}&category=${categoryFilter}&location=${locationFilter}`)
+loadPageVacancys();
+
+loadCategorys();
+
+
+
+function loadPageVacancys() {
+    const paginator = document.querySelector('input[name="currentPage"]:checked') as HTMLInputElement;
+    const num = paginator ? parseInt(paginator.value) : 0;
+    const categoryList = document.querySelector('input[name="currentCategory"]:checked') as HTMLInputElement;
+    const category = categoryList ? parseInt(categoryList.value) : '';
+    const subCategoryList = document.querySelector('input[name="currentSubCategory"]:checked') as HTMLInputElement;
+    const subCategory = subCategoryList ? parseInt(subCategoryList.value) : '';
+    const locationList = document.querySelector('input[name="currentLocation"]:checked') as HTMLInputElement;
+    const location = locationList ? parseInt(locationList.value) : '';
+
+    fetch(`/api/all_vacancy?page=${num}&category_id=${category}&sub_category_id=${subCategory}&location_id=${location}`)
         .then(response => response.json())
         .then(function (response: any) {
             vacancys.arr = response.arr;
             listPages.count = response.countPages;
+        });
+
+}
+
+function loadCategorys(){
+    fetch('/api/get_category')
+        .then(response => response.json())
+        .then(function (response:any) {
+            categoryFilterBlock.arr = response.arr;
         });
 }

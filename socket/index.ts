@@ -1,6 +1,7 @@
 import {_Session, _Socket, _User, _Handshake} from "../routes/interfaces";
 import {Server, Socket} from "socket.io";
 import {HttpError} from "../error/index";
+import User from "../models/user";
 
 const log = require('../lib/log')(module);
 const cookie = require('cookie');
@@ -8,7 +9,6 @@ const async = require('async');
 const config = require('../config/config.json');
 
 const {sessionStore} = require('../lib/sessionsStore');
-const {User} = require('../models/user');
 const cookieParser = require('cookie-parser');
 
 module.exports = function (server: Server) {
@@ -91,7 +91,7 @@ function loadUser(session: _Session, callback: (e: Event | Error | null, user?: 
         return callback(null, null);
     }
     log.debug("retrieving user ", session.user);
-    User.findById(session.user, function (err: Error, user: _User) {
+    User.findById(session.user.id,  (err: Error |Event |null, user?: _User)=> {
         if (err) return callback(err);
         if (!user) return callback(null, null);
         log.debug("user findbyId result: " + user);

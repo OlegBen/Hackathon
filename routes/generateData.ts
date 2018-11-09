@@ -16,8 +16,8 @@ function generateDataResumes(__: _RequestUser, _: express.Response, next: expres
             age: Math.floor(Math.random() * 100),
             type: 'Full',
             position: 'Director',
-            location_id: 1,
-            sub_category_id: 1,
+            location_id: Math.floor(Math.random() * 4) + 1,
+            sub_category_id: Math.floor(Math.random() * 4) + 1,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
             creator_id: i
@@ -33,8 +33,8 @@ function generateDataVacancys(__: _RequestUser, _: express.Response, next: expre
             logo: '*Some Logo',
             url: 'google.com',
             position: 'Director',
-            location_id: 1,
-            sub_category_id: 1,
+            location_id: Math.floor(Math.random() * 4) + 1,
+            sub_category_id: Math.floor(Math.random() * 4) + 1,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
             creator_id: 1

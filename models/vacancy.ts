@@ -13,25 +13,31 @@ class Vacancy {
         //count
         //query
         //console.log(query);
-        let queryStr = 'SELECT *FROM Vacancy WHERE ';
-        let queryVal = [];
+        let queryStr = '';
+        let queryVal:string[] = [];
         if (query.creator_id) {
-            queryStr += 'creator_id = $1';
+            queryStr += 'WHERE creator_id = $1';
             queryVal.push(query.creator_id)
         }
         else {
-            queryStr += 'is_public = $1';
-            queryVal.push(1);
+            queryStr += 'WHERE is_public = $1';
+            queryVal.push('1');
         }
+        if (query.sub_category_id) {
+            queryStr += ' AND sub_category_id = $2 ';
+            queryVal.push(query.sub_category_id)
+        }
+
         let paginateStr = query.page ? ` LIMIT ${countInPage} OFFSET ${query.page * countInPage}` : '';
         pool.query({
-            text: queryStr + `${paginateStr};`,
+            text: `SELECT *FROM Vacancy ${queryStr} ${paginateStr};`,
             values: queryVal,
         }, (err: Error, result: any) => {
             if (err) console.log(err);
             if (result) {
-                pool.query('SELECT COUNT(*) FROM Vacancy;', (err: Error, count: any) => {
-                    callback(result.rows, Math.ceil(count.rows[0].count / countInPage));
+                pool.query({text:`SELECT COUNT(*) FROM Vacancy ${queryStr};`, values:queryVal}, (err: Error, result2: any) => {
+                    if(err) console.log(err);
+                    callback(result.rows, Math.ceil(result2.rows[0].count / countInPage));
                 })
             }
             else
