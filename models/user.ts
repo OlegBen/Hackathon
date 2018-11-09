@@ -1,7 +1,8 @@
 import {_User} from "../routes/interfaces";
+import {authError, cbQuery, pool} from "./base";
 
 const async = require('async');
-const {cbQuery, pool, authError} = require('./base');
+
 
 
 class User {

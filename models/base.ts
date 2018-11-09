@@ -211,5 +211,6 @@ export {
     pool,
     DB,
     authError,
-    getQueryInsert
+    getQueryInsert,
+    cbQuery
 }
