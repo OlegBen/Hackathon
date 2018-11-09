@@ -1,13 +1,12 @@
 import express = require('express')
 import {_RequestUser} from "../../interfaces";
-import {_Vacancy} from "../../../models/interfaces";
+import Vacancy, {_Vacancy} from "../../../models/vacancy";
 
 const HttpError = require('../../../error/index').HttpError;
-const Vacancy = require('../../../models/vacancy');
 
 
 function get(req: _RequestUser, res: express.Response, next: express.NextFunction) {
-    Vacancy.findById(req.params.id, (vacancy: _Vacancy) => {
+    Vacancy.findById(req.params.id, (vacancy: _Vacancy | null) => {
         if (!vacancy) return next(new HttpError(404, "Вакансия не найдена"));
 
         if ((req.query.admin && req.query.admin === 'true' && req.user && req.user.id == vacancy.creator_id) ||

@@ -1,7 +1,8 @@
 import express = require('express')
 import {_AuthorizeData, _RequestUser} from "../routes/interfaces";
+import {HttpError} from "../error/index";
 
-const HttpError = require('../error/index').HttpError;
+
 
 function checkAuth(req:_RequestUser, res:express.Response, next:express.NextFunction) {
     if (!req.user) {

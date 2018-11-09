@@ -1,9 +1,10 @@
 import express = require('express')
 import {_RequestUser} from "./interfaces";
+import Vacancy from "../models/vacancy";
+import Resume from "../models/resume";
 
 
-const Vacancy = require('../models/vacancy');
-const Resume = require('../models/resume');
+
 
 
 const count = 20;
@@ -14,12 +15,11 @@ function generateDataResumes(__: _RequestUser, _: express.Response, next: expres
             age: Math.floor(Math.random() * 100),
             type: 'Full',
             position: 'Director',
-            location: 'Simferopol',
-            category: '' + Math.floor(Math.random() * 5),
+            location_id: 1,
+            sub_category_id: 1,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
-            isPublic: true,
-            email: 'example@gmail.com',
-            creatorId: '5bdeaa40af53920428a569ff'
+            is_public: 1,
+            creator_id: 1
         });
     next();
 }
@@ -32,14 +32,12 @@ function generateDataVacancys(__: _RequestUser, _: express.Response, next: expre
             logo: '*Some Logo',
             url: 'google.com',
             position: 'Director',
-            location: 'Simferopol',
-            category: '' + Math.floor(Math.random() * 5),
+            location_id: 1,
+            sub_category_id: 1,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
-            isPublic: true,
-            email: 'example@gmail.com',
+            is_public: 1,
             phone: '+7(978)123-45-67',
-            creatorId: '5bdeaa40af53920428a569ff',
-            state: 'Actual'
+            creator_id: 1
         });
     next();
 }

@@ -29,6 +29,8 @@ router.get('/history_search', checkAuth, require('./pages/user/historySearch').g
 router.get('/api/user_vacancy', checkAuth, require('./api/userVacancy').get);
 router.get('/api/all_vacancy',  require('./api/allVacancy').get);
 router.get('/api/all_resume',  require('./api/allResume').get);
+router.get('/api/show_locations',  require('./api/allLocations').get);
+router.get('/api/create_location',  require('./api/create_location').get);
 
 
 router.post('/admin_panel', checkAuth, require('./pages/adminPanel').post);

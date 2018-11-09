@@ -1,16 +1,12 @@
-import {_Resume} from "./interfaces";
+import { pool, getQueryInsert} from "./base";
 
-const {cbQuery, pool, authError} = require('./base');
+
+
 
 class Resume {
-    static create(data: any) {
+    static create(data: _Resume) {
 
-        pool.query({
-            text: 'INSERT INTO Resume(name,surname, age, type, position, location_id, sub_category_id, description,' +
-            ' is_public,   creator_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-            values: [data.name, data.surname, data.age, data.type, data.position, data.location_id, data.sub_category_id, data.description,
-                data.is_public,  data.creator_id],
-        }, (err: Error, result: any) => {
+        pool.query(getQueryInsert('Resume', data), (err: Error, result: any) => {
             if (err) console.log(err);
         });
     }
@@ -19,12 +15,17 @@ class Resume {
         //page
         //count
         //query
-        let queryStr = 'SELECT *FROM Resume WHERE is_public = $1';
-        let queryVal = [1];
-        if(query.creatorId) {
-            queryStr += ' AND creator_id = $2';
+        let queryStr = 'SELECT *FROM Resume WHERE ';
+        let queryVal = [];
+        if (query.creator_id) {
+            queryStr += 'creator_id = $1';
             queryVal.push(query.creator_id)
         }
+        else{
+            queryStr += 'is_public = $1';
+            queryVal.push(1);
+        }
+
 
         pool.query({
             text: queryStr + ';',
@@ -58,4 +59,18 @@ class Resume {
     }
 }
 
-module.exports = Resume;
+export default Resume;
+
+export interface _Resume {
+    id?: string
+    name: string
+    age: number
+    type: string
+    position: string
+    location_id: number
+    sub_category_id: number
+    description: string
+    is_public: number
+
+    creator_id: number
+}

@@ -46,7 +46,7 @@ class User {
             },
             function (user: any, callback: (e: Event | Error | null, result?: any) => void) {
                 if (user && user.length > 0) {
-                    if (user[0].hashedpassword == password)
+                    if (user[0].hashed_password == password)
                         callback(null, user[0]);
                     else
                         callback(new authError("Пароль неверен"))
@@ -71,4 +71,4 @@ class User {
     }
 }
 
-module.exports = User;
+export default User;

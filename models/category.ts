@@ -1,4 +1,5 @@
-const {cbQuery, pool, authError} = require('./base');
+import {pool} from "./base";
+
 
 
 class Category {
@@ -35,4 +36,4 @@ class Category {
     }
 }
 
-module.exports = Category;
+export default Category;

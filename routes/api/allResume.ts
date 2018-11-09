@@ -1,9 +1,9 @@
 import express = require('express')
 import {_RequestSettUser} from "../interfaces";
-import {_Resume} from "../../models/interfaces";
+
+import Resume, {_Resume} from "../../models/resume";
 
 
-const Resume = require('../../models/resume');
 
 
 function get(req: _RequestSettUser, res: express.Response, __: express.NextFunction) {

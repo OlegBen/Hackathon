@@ -1,7 +1,7 @@
 import express = require('express')
 import {_RequestUser} from "../../interfaces";
+import Vacancy from "../../../models/vacancy";
 
-const Vacancy = require('../../../models/vacancy');
 const randToken = require('rand-token');
 
 
@@ -23,7 +23,7 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
             data = getDataFromReq(req);
         switch (req.query.action) {
             case 'delete':
-                Vacancy.delete(req.query.id, req.user.id);
+                //Vacancy.delete(req.query.id, req.user.id);
                 break;
             case 'update':
                 Vacancy.updateOne(req.body.cv_id, data);

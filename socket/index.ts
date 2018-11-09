@@ -1,11 +1,12 @@
 import {_Session, _Socket, _User, _Handshake} from "../routes/interfaces";
 import {Server, Socket} from "socket.io";
+import {HttpError} from "../error/index";
 
 const log = require('../lib/log')(module);
 const cookie = require('cookie');
 const async = require('async');
 const config = require('../config/config.json');
-const {HttpError} = require('../error/index');
+
 const {sessionStore} = require('../lib/sessionsStore');
 const {User} = require('../models/user');
 const cookieParser = require('cookie-parser');

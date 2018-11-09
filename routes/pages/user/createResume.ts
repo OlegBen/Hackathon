@@ -1,9 +1,9 @@
 import express = require('express')
 import {_RequestUser} from "../../interfaces";
+import Resume from "../../../models/resume";
 
 
 
-const Resume = require('../../../models/resume');
 
 function get(req: _RequestUser, res: express.Response, __: express.NextFunction) {
     res.render("pages/user/createResume", {
@@ -22,11 +22,11 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
             data = getDataFromReq(req);
         switch (req.query.action) {
             case 'delete':
-                Resume.delete(req.query.id, req.user.id);
+                //Resume.delete(req.query.id, req.user.id);
                 break;
             case 'update':
                 data._id = req.body.rm_id;
-                Resume.UpdateOne(data);
+                //Resume.UpdateOne(data);
                 break;
             case 'create':
                 Resume.create(data);

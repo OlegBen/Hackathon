@@ -9,7 +9,7 @@ export interface _EmptyObj {
 
 
 export interface _User {
-    id: string
+    id: number
     email:string
 }
 
