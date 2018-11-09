@@ -6,8 +6,8 @@
         flex-direction: column;
     }
 </style>
-
-<form method="post">
+<h1>Settings</h1>
+<form method="post" action="/admin_panel?action=settings">
     <label>Кол-во вакансий</label>
     <input name="ss_vacancy_count" value=<%- server_settings.vacancy.count%> type="number">
     <label>Жизнь вакансий</label>
@@ -17,4 +17,40 @@
     <label>Жизнь резюме</label>
     <input name="ss_resume_days" value=<%- server_settings.resume.days%> type="number">
     <button id="submit" type="submit" data-loadint-text="Отпр.">Update</button>
+</form>
+<h1>New Country</h1>
+<form method="post" action="/admin_panel?action=country">
+    <label>Новая страна</label>
+    <input name="country_name">
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Create</button>
+</form>
+<h1>New City</h1>
+<form method="post" action="/admin_panel?action=city">
+    <label>Новый город</label>
+    <input name="city_name">
+    <label>ID Country</label>
+    <input name="country_id">
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Create</button>
+</form>
+<h1>New Location</h1>
+<form method="post" action="/admin_panel?action=location">
+    <label>Новая локация</label>
+    <input name="location_name">
+    <label>ID City</label>
+    <input name="city_id">
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Create</button>
+</form>
+<h1>New Category</h1>
+<form method="post" action="/admin_panel?action=location">
+    <label>Новая категория</label>
+    <input name="category_name">
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Create</button>
+</form>
+<h1>New SubCategory</h1>
+<form method="post" action="/admin_panel?action=sub_category">
+    <label>Новая подкатегория</label>
+    <input name="sub_category_name">
+    <label>ID Category</label>
+    <input name="category_id">
+    <button id="submit" type="submit" data-loadint-text="Отпр.">Create</button>
 </form>

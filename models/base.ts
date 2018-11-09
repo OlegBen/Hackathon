@@ -182,7 +182,12 @@ function cbQueryEmpty(query: string, callback?: () => void) {
 }
 
 
-
+function cbQuery(query: string | { text: string, values: any[] }, callback: (e: Event | null, result: any) => void) {
+    pool.query(query, (err: Error, result: any) => {
+        if (err) console.log(err);
+        callback(null, result.rows);
+    });
+}
 
 
 

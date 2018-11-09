@@ -1,13 +1,13 @@
 import {pool} from "./base";
 
 
-
 class Category {
     static create(name: string) {
         pool.query({
             text: 'INSERT INTO Category (name) VALUES($1);',
             values: [name],
         }, (err: Error, result: any) => {
+            console.log(result)
             if (err) console.log(err);
         });
     }
@@ -21,17 +21,26 @@ class Category {
         });
     }
 
-    static showAll(callback: (err: Error | Event | null, data?: any[]) => void) {
+    static showAll(callback: (data: any[] | null) => void) {
         pool.query('SELECT *FROM Category;', (err: Error, result: any) => {
             if (err) console.log(err);
-            callback(null, result.rows);
+            if (result)
+                callback(result.rows);
+            else
+                callback(null)
         });
     }
 
-    static showAllSub(callback: (err: Error | Event | null, data?: any[]) => void) {
-        pool.query('SELECT *FROM SubCategory;', (err: Error, result: any) => {
+    static showAllSub(category_id: number, callback: (data: any[] | null) => void) {
+        pool.query({
+            text: 'SELECT *FROM SubCategory WHERE id_category = $1;',
+            values: [category_id]
+        }, (err: Error, result: any) => {
             if (err) console.log(err);
-            callback(null, result.rows);
+            if (result)
+                callback(result.rows);
+            else
+                callback(null)
         });
     }
 }
