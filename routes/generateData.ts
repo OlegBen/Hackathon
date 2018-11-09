@@ -12,6 +12,7 @@ function generateDataResumes(__: _RequestUser, _: express.Response, next: expres
     for (let i = 0; i < count; i++)
         Resume.create({
             name: 'Resume' + Math.floor(Math.random() * 20),
+            surname: 'surname',
             age: Math.floor(Math.random() * 100),
             type: 'Full',
             position: 'Director',
@@ -19,7 +20,7 @@ function generateDataResumes(__: _RequestUser, _: express.Response, next: expres
             sub_category_id: 1,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
-            creator_id: 1
+            creator_id: i
         });
     next();
 }
@@ -36,7 +37,6 @@ function generateDataVacancys(__: _RequestUser, _: express.Response, next: expre
             sub_category_id: 1,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
-            phone: '+7(978)123-45-67',
             creator_id: 1
         });
     next();

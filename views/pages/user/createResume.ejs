@@ -15,6 +15,9 @@
     <label>Имя</label>
     <input name="rm_name" value="<%- resume.name %>" required>
 
+    <label>Фамилия</label>
+    <input name="rm_surname" value="<%- resume.surname %>" required>
+
     <label>Возраст</label>
     <input name="rm_age" value="<%- resume.age %>" type="number" required>
 
@@ -25,16 +28,14 @@
     <input name="rm_position" value="<%- resume.position %>" required>
 
     <label>Локация</label>
-    <input name="rm_location" value="<%- resume.location_id %>">
+    <input name="rm_location_id" value="<%- resume.location_id %>">
 
     <label>Категории</label>
-    <input name="rm_category" value="<%- resume.sub_category_id %>">
+    <input name="rm_sub_category_id" value="<%- resume.sub_category_id %>">
 
     <label>Описание</label>
     <input name="rm_description" value="<%- resume.description %>" required>
 
-    <label>Email</label>
-    <input name="rm_email" value="<%- resume.email %>">
 
     <label>Публичный или нет</label>
     <% if(resume.is_Public == 1) { %>

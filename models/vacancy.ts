@@ -1,4 +1,4 @@
-import { getQueryInsert, pool} from "./base";
+import {getQueryInsert, pool} from "./base";
 
 
 class Vacancy {
@@ -19,17 +19,23 @@ class Vacancy {
             queryStr += 'creator_id = $1';
             queryVal.push(query.creator_id)
         }
-        else{
+        else {
             queryStr += 'is_public = $1';
             queryVal.push(1);
         }
-
+        let paginateStr = query.page ? ` LIMIT ${countInPage} OFFSET ${query.page * countInPage}` : '';
         pool.query({
-            text: queryStr + ';',
+            text: queryStr + `${paginateStr};`,
             values: queryVal,
         }, (err: Error, result: any) => {
             if (err) console.log(err);
-            callback(result.rows, countInPage);
+            if (result) {
+                pool.query('SELECT COUNT(*) FROM Vacancy;', (err: Error, count: any) => {
+                    callback(result.rows, Math.ceil(count.rows[0].count / countInPage));
+                })
+            }
+            else
+                callback([], 0)
         });
     }
 
@@ -46,7 +52,7 @@ class Vacancy {
         });
     }
 
-    static updateOne(id: number, data:_Vacancy) {
+    static updateOne(id: number, data: _Vacancy) {
         pool.query({
             text: 'UPDATE Vacancy SET company = $1 , type = $2 , url = $3 , logo = $4 , position = $5 , location_id = $6 , ' +
             'sub_category_id = $7 , description = $8 , is_public = $9 , phone = $10 , token = $11  WHERE id = $12;',
@@ -54,15 +60,14 @@ class Vacancy {
                 data.position, data.location_id, data.sub_category_id, data.description,
                 data.is_public, data.phone, data.token, id],
         }, (err: Error, result: any) => {
-            if(err) console.log(err);
-            console.log(result)
+            if (err) console.log(err);
         });
     }
 
-    static deleteOne(id: number) {
+    static deleteOne(id: number, creator_id: number) {
         pool.query({
-            text: 'DELETE FROM Vacancy WHERE id = $1;',
-            values: [id],
+            text: 'DELETE FROM Vacancy WHERE id = $1 AND creator_id = $2;',
+            values: [id, creator_id],
         }, (err: Error, result: any) => {
             if (err) console.log(err);
         });

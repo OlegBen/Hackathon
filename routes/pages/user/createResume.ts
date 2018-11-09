@@ -22,11 +22,10 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
             data = getDataFromReq(req);
         switch (req.query.action) {
             case 'delete':
-                //Resume.delete(req.query.id, req.user.id);
+                Resume.deleteOne(req.query.id, req.user.id);
                 break;
             case 'update':
-                data._id = req.body.rm_id;
-                //Resume.UpdateOne(data);
+                Resume.updateOne(req.body.rm_id, data);
                 break;
             case 'create':
                 Resume.create(data);
@@ -39,15 +38,14 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
 function getDataFromReq(req:_RequestUser){
     return {
         name: req.body.rm_name,
-        surname:'surname',
+        surname:req.body.rm_surname,
         age: parseInt(req.body.rm_age),
         type: req.body.rm_type,
         position: req.body.rm_position,
-        location_id: null,
-        sub_category_id: null,
+        location_id: req.body.rm_location_id,
+        sub_category_id: req.body.rm_sub_category_id,
         description: req.body.rm_description,
         is_public: req.body.rm_is_public === 'on' ? 1 : 0,
-        email: req.body.rm_email,
         creator_id: req.user!.id
     }
 }

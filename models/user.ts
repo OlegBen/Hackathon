@@ -64,10 +64,13 @@ class User {
             values: [id],
         }, (err: Error, result: any) => {
             if (err) console.log(err);
-            if (result.rows.length > 0)
-                callback(null, result.rows[0]);
-            else
-                callback(new authError("Пользователь не найден"))
+            if(result) {
+                if (result.rows.length > 0)
+                    callback(null, result.rows[0]);
+                else
+                    callback(null)
+            } else
+                callback(null)
         });
     }
 }

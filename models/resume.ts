@@ -5,7 +5,6 @@ import { pool, getQueryInsert} from "./base";
 
 class Resume {
     static create(data: _Resume) {
-
         pool.query(getQueryInsert('Resume', data), (err: Error, result: any) => {
             if (err) console.log(err);
         });
@@ -32,7 +31,12 @@ class Resume {
             values: queryVal,
         }, (err: Error, result: any) => {
             if (err) console.log(err);
-            callback( result.rows, countInPage);
+            if (result) {
+                pool.query('SELECT COUNT(*) FROM Resume;', (err: Error, count: any) => {
+                    callback(result.rows, Math.ceil(count.rows[0].count / countInPage));
+                })
+            } else
+            callback( [], 0);
         });
     }
 
@@ -49,10 +53,23 @@ class Resume {
         });
     }
 
-    static deleteOne(id: number) {
+    static updateOne(id: number, data:_Resume) {
         pool.query({
-            text: 'DELETE FROM Resume WHERE id = $1;',
-            values: [id],
+            text: 'UPDATE Resume SET name = $1 , surname = $2 , age = $3 , type = $4 , position = $5 , location_id = $6 , ' +
+            'sub_category_id = $7 , description = $8 , is_public = $9 WHERE id = $10;',
+            values: [data.name, data.surname, data.age, data.type,
+                data.position, data.location_id, data.sub_category_id, data.description,
+                data.is_public, id],
+        }, (err: Error, result: any) => {
+            if(err) console.log(err);
+            console.log(result)
+        });
+    }
+
+    static deleteOne(id: number, creator_id:number) {
+        pool.query({
+            text: 'DELETE FROM Resume WHERE id = $1 AND creator_id = $2;',
+            values: [id, creator_id],
         }, (err: Error, result: any) => {
             if (err) console.log(err);
         });
@@ -64,6 +81,7 @@ export default Resume;
 export interface _Resume {
     id?: string
     name: string
+    surname:string
     age: number
     type: string
     position: string

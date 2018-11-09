@@ -7,7 +7,6 @@ class Category {
             text: 'INSERT INTO Category (name) VALUES($1);',
             values: [name],
         }, (err: Error, result: any) => {
-            console.log(result)
             if (err) console.log(err);
         });
     }

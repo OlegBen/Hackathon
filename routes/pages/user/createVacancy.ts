@@ -23,7 +23,7 @@ function post(req: _RequestUser, res: express.Response, _: express.NextFunction)
             data = getDataFromReq(req);
         switch (req.query.action) {
             case 'delete':
-                //Vacancy.delete(req.query.id, req.user.id);
+                Vacancy.deleteOne(req.query.id, req.user.id);
                 break;
             case 'update':
                 Vacancy.updateOne(req.body.cv_id, data);
@@ -43,11 +43,10 @@ function getDataFromReq(req: _RequestUser) {
         logo: req.body.cv_logo,
         url: req.body.cv_url,
         position: req.body.cv_position,
-        location_Id: null,
-        sub_category_id: null,
+        location_id: req.body.cv_location_id,
+        sub_category_id: req.body.cv_sub_category_id,
         description: req.body.cv_description,
         is_public: req.body.cv_is_public === 'on' ? 1 : 0,
-        phone: req.body.cv_phone,
         creator_id: req.user!.id,
         token: req.body.cv_generate_token == 'on' ? randToken.generate(16) : ''
     };

@@ -29,9 +29,7 @@ function post(req: _RequetsSett, res: express.Response, __: express.NextFunction
                     days: daysR >= 7 && daysR <= 30 ? daysR : 15,
                 }
             };
-            ServerSettings.updateOne(settings, (err: Error) => {
-
-            });
+            ServerSettings.updateOne(settings, (err: Error) => {});
             break;
         case 'country':
             if (req.body.country_name)
@@ -46,7 +44,6 @@ function post(req: _RequetsSett, res: express.Response, __: express.NextFunction
                 Location.createLocation(req.body.location_name, req.body.city_id);
             break;
         case 'category':
-            console.log('x')
             if (req.body.category_name)
                 Category.create(req.body.category_name);
             break;
