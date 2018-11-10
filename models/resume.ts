@@ -73,7 +73,8 @@ class Resume {
         });
     }
 
-    static addToHistory(id_user: number, id_resume: id, isFavorite:Boolean) {
+    static addToHistory(id_user: number, id_resume: number, isFavorite:Boolean) {
+
         pool.query({
             text: 'SELECT *FROM HistoryResume WHERE id_user = $1 AND id_resume = $2;',
             values: [id_user, id_resume]
@@ -90,6 +91,7 @@ class Resume {
                 console.log(result.rows[0]);
             }
         })
+
     }
 }
 
