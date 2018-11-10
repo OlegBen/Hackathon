@@ -33,7 +33,7 @@ class DB {
                 cbQueryEmpty('CREATE TABLE IF NOT EXISTS City(\n' +
                     '    id SERIAL PRIMARY KEY,\n' +
                     '    name varchar(100) UNIQUE,\n' +
-                    '    id_country bigint,\n' +
+                    '    id_country bigint NOT NULL,\n' +
                     '    FOREIGN KEY(id_country) REFERENCES Country(id) ON DELETE CASCADE\n' +
                     ');');
                 callback()
@@ -42,19 +42,17 @@ class DB {
                 cbQueryEmpty('CREATE TABLE IF NOT EXISTS Location(\n' +
                     '    id SERIAL PRIMARY KEY,\n' +
                     '    name varchar(100) UNIQUE,\n' +
-                    '    id_city bigint,\n' +
+                    '    id_city bigint NOT NULL,\n' +
                     '    FOREIGN KEY(id_city) REFERENCES City(id) ON DELETE CASCADE\n' +
                     ');', callback);
             },
             function (callback: () => void) {
                 cbQueryEmpty('CREATE TABLE IF NOT EXISTS Client (\n' +
                     '    id SERIAL PRIMARY KEY,\n' +
-                    '    nick varchar(20) NOT NULL,\n' +
+                    '    nick varchar(20) NOT NULL UNIQUE,\n' +
                     '    email varchar(40) NOT NULL UNIQUE,\n' +
                     '    hashed_password varchar(50) NOT NULL,\n' +
                     '    salt varchar(100) NOT NULL,\n' +
-                    '    location_id bigint,\n' +
-                    '    FOREIGN KEY(location_id) REFERENCES Location(id),\n' +
                     '    role varchar(10),\n' +
                     '    created timestamp DEFAULT CURRENT_TIMESTAMP\n' +
                     ');', callback);
@@ -88,10 +86,16 @@ class DB {
                     '    created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n' +
                     '    creator_id bigint  NOT NULL,\n' +
                     '    FOREIGN KEY(creator_id) REFERENCES Client(id) ON DELETE CASCADE,\n' +
+                    '    category_id bigint,\n' +
+                    '    FOREIGN KEY(category_id) REFERENCES Category(id) ON DELETE SET NULL,\n' +
                     '    sub_category_id bigint,\n' +
-                    '    FOREIGN KEY(sub_category_id) REFERENCES SubCategory(id),\n' +
+                    '    FOREIGN KEY(sub_category_id) REFERENCES SubCategory(id) ON DELETE SET NULL,\n' +
+                    '    country_id bigint,\n' +
+                    '    FOREIGN KEY(country_id) REFERENCES Country(id)  ON DELETE SET NULL,\n' +
+                    '    city_id bigint,\n' +
+                    '    FOREIGN KEY(city_id) REFERENCES City(id)  ON DELETE SET NULL,\n' +
                     '    location_id bigint,\n' +
-                    '    FOREIGN KEY(location_id) REFERENCES Location(id)\n' +
+                    '    FOREIGN KEY(location_id) REFERENCES Location(id) ON DELETE SET NULL\n' +
                     ');', callback);
             },
             function (callback: () => void) {
@@ -104,8 +108,14 @@ class DB {
                     '    position varchar(100),\n' +
                     '    description text,\n' +
                     '    is_public BIT,\n' +
+                    '    country_id bigint,\n' +
+                    '    FOREIGN KEY(country_id) REFERENCES Country(id) ON DELETE SET NULL,\n' +
+                    '    city_id bigint,\n' +
+                    '    FOREIGN KEY(city_id) REFERENCES City(id) ON DELETE SET NULL,\n' +
                     '    location_id bigint,\n' +
-                    '    FOREIGN KEY(location_id) REFERENCES Location(id),\n' +
+                    '    FOREIGN KEY(location_id) REFERENCES Location(id) ON DELETE SET NULL,\n' +
+                    '    category_id bigint,\n' +
+                    '    FOREIGN KEY(category_id) REFERENCES Category(id) ON DELETE SET NULL,\n' +
                     '    sub_category_id bigint,\n' +
                     '    FOREIGN KEY(sub_category_id) REFERENCES SubCategory(id),\n' +
                     '    creator_id bigint NOT NULL UNIQUE,\n' +
@@ -119,7 +129,7 @@ class DB {
                     '    id_user bigint  NOT NULL,\n' +
                     '    FOREIGN KEY(id_user) REFERENCES Client(id) ON DELETE CASCADE,\n' +
                     '    id_vacancy bigint  NOT NULL,\n' +
-                    '    FOREIGN KEY(id_vacancy) REFERENCES Vacancy(id)\n' +
+                    '    FOREIGN KEY(id_vacancy) REFERENCES Vacancy(id) ON DELETE CASCADE\n' +
                     ');', callback);
             },
             function (callback: () => void) {
@@ -129,7 +139,7 @@ class DB {
                     '    id_user bigint  NOT NULL,\n' +
                     '    FOREIGN KEY(id_user) REFERENCES Client(id) ON DELETE CASCADE,\n' +
                     '    id_resume bigint  NOT NULL,\n' +
-                    '    FOREIGN KEY(id_resume) REFERENCES Resume(id)\n' +
+                    '    FOREIGN KEY(id_resume) REFERENCES Resume(id) ON DELETE CASCADE\n' +
                     ');', callback);
             }
         ], callback);

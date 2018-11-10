@@ -38,9 +38,9 @@ function loadPageVacancys() {
     const paginator = document.querySelector('input[name="currentPage"]:checked') as HTMLInputElement;
     const num = paginator ? parseInt(paginator.value) : 0;
     const categoryList = document.querySelector('input[name="currentCategory"]:checked') as HTMLInputElement;
-    const category = categoryList ? parseInt(categoryList.value) : '';
+    const category = categoryList ? (parseInt(categoryList.value) == -1 ? '' : parseInt(categoryList.value)) : '';
     const subCategoryList = document.querySelector('input[name="currentSubCategory"]:checked') as HTMLInputElement;
-    const subCategory = subCategoryList ? parseInt(subCategoryList.value) : '';
+    const subCategory = subCategoryList ? (parseInt(subCategoryList.value) == -1 ? '' : parseInt(subCategoryList.value)) : '';
     const locationList = document.querySelector('input[name="currentLocation"]:checked') as HTMLInputElement;
     const location = locationList ? parseInt(locationList.value) : '';
 

@@ -13,30 +13,70 @@ class Vacancy {
         //count
         //query
         //console.log(query);
-        let queryStr = '';
-        let queryVal:string[] = [];
+        let where = '';
+        let queryVal: string[] = [];
+        let countWhere = 1;
         if (query.creator_id) {
-            queryStr += 'WHERE creator_id = $1';
+            where += `WHERE creator_id = $${countWhere}`;
             queryVal.push(query.creator_id)
+            countWhere++;
         }
         else {
-            queryStr += 'WHERE is_public = $1';
+            where += 'WHERE is_public = $1';
             queryVal.push('1');
+            countWhere++;
         }
         if (query.sub_category_id) {
-            queryStr += ' AND sub_category_id = $2 ';
-            queryVal.push(query.sub_category_id)
+            where += ` AND sub_category_id = $${countWhere}`;
+            queryVal.push(query.sub_category_id);
+            countWhere++;
+        }
+        if (query.category_id) {
+            where += ` AND category_id =  $${countWhere}`;
+            queryVal.push(query.category_id);
+            countWhere++;
+        }
+        if (query.city_id) {
+            where += ` AND city_id =  $${countWhere}`;
+            queryVal.push(query.city_id);
+            countWhere++;
+        }
+        if (query.country_id) {
+            where += ` AND country_id =  $${countWhere}`;
+            queryVal.push(query.country_id);
+            countWhere++;
+        }
+        if (query.location_id) {
+            where += ` AND location_id =  $${countWhere}`;
+            queryVal.push(query.location_id);
+            countWhere++;
         }
 
-        let paginateStr = query.page ? ` LIMIT ${countInPage} OFFSET ${query.page * countInPage}` : '';
+        let limitOffset = query.page ? ` LIMIT ${countInPage} OFFSET ${query.page * countInPage}` : '';
+        let join = 'INNER JOIN Client ON v.creator_id = Client.id';
+        join +=
+            ' LEFT  JOIN SubCategory ON v.sub_category_id = SubCategory.id' +
+            ' LEFT  JOIN Category ON SubCategory.id_category = Category.id ';
+        join +=
+            'LEFT  JOIN Location ON v.location_id = Location.id' +
+            ' LEFT  JOIN City ON Location.id_city = City.id' +
+            ' LEFT  JOIN Country ON City.id_country = Country.id';
+        let select = 'v.company, v.type, v.logo, v.url, v.position, v.description, v.is_public, ' +
+            'v.created, v.phone, v.sub_category_id, v.location_id, ' +
+            'SubCategory.name as sub_category_name, Category.name as category_name, ' +
+            'Location.name as location_name, City.name as city_name, City.id, Country.name as country_name, Country.id, Client.email, v.id';
+        let order = 'ORDER BY v.id';
         pool.query({
-            text: `SELECT *FROM Vacancy ${queryStr} ${paginateStr};`,
+            text: `SELECT ${select} FROM Vacancy AS v ${join} ${where} ${order} ${limitOffset};`,
             values: queryVal,
         }, (err: Error, result: any) => {
             if (err) console.log(err);
             if (result) {
-                pool.query({text:`SELECT COUNT(*) FROM Vacancy ${queryStr};`, values:queryVal}, (err: Error, result2: any) => {
-                    if(err) console.log(err);
+                pool.query({
+                    text: `SELECT COUNT(*) FROM Vacancy ${where};`,
+                    values: queryVal
+                }, (err: Error, result2: any) => {
+                    if (err) console.log(err);
                     callback(result.rows, Math.ceil(result2.rows[0].count / countInPage));
                 })
             }
@@ -89,8 +129,11 @@ export interface _Vacancy {
     logo?: string
     url?: string
     position: string
-    location_id: number
-    sub_category_id: number
+    location_id: number | null
+    city_id:number | null
+    country_id:number | null
+    category_id:number | null
+    sub_category_id: number | null
     description: string
     is_public: number
 

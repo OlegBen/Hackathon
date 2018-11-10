@@ -28,6 +28,7 @@ export function createPageList(id:string, loadList:Function){
                         <label :for="id + '_' + index" >Page {{index+skipPages}}</label>
                    </div>
                    <button @click=skipPagesIncr(1)  v-if="count > countButtons">right</button>
+                   <p v-if="count > countButtons">Страниц {{count}}</p>
                </div>`
     });
 }

@@ -3,9 +3,10 @@ import express = require('express')
 
 const router = express.Router();
 const {checkAuth} = require('../middleware/checkAuth');
-const {generateDataResumes, generateDataVacancys} = require('./generateData');
+const {generateData} = require('./generateData');
 
-router.get('/generate', generateDataResumes, generateDataVacancys, (_:express.Request, res:express.Response)=>{res.redirect('/')});
+router.get('/generate',  generateData);
+
 
 router.get('/', require('./pages/frontPage').get);
 router.get('/admin_panel', checkAuth, require('./pages/adminPanel').get);

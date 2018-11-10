@@ -1,6 +1,4 @@
-import { pool, getQueryInsert} from "./base";
-
-
+import {pool, getQueryInsert} from "./base";
 
 
 class Resume {
@@ -10,7 +8,7 @@ class Resume {
         });
     }
 
-    static getAllPublicQuery(query:any,countInPage:number, callback: ( resumeArr: _Resume[], countInPage:number) => void) {
+    static getAllPublicQuery(query: any, countInPage: number, callback: (resumeArr: _Resume[], countInPage: number) => void) {
         //page
         //count
         //query
@@ -20,7 +18,7 @@ class Resume {
             queryStr += 'creator_id = $1';
             queryVal.push(query.creator_id)
         }
-        else{
+        else {
             queryStr += 'is_public = $1';
             queryVal.push(1);
         }
@@ -36,7 +34,7 @@ class Resume {
                     callback(result.rows, Math.ceil(count.rows[0].count / countInPage));
                 })
             } else
-            callback( [], 0);
+                callback([], 0);
         });
     }
 
@@ -53,7 +51,7 @@ class Resume {
         });
     }
 
-    static updateOne(id: number, data:_Resume) {
+    static updateOne(id: number, data: _Resume) {
         pool.query({
             text: 'UPDATE Resume SET name = $1 , surname = $2 , age = $3 , type = $4 , position = $5 , location_id = $6 , ' +
             'sub_category_id = $7 , description = $8 , is_public = $9 WHERE id = $10;',
@@ -61,18 +59,37 @@ class Resume {
                 data.position, data.location_id, data.sub_category_id, data.description,
                 data.is_public, id],
         }, (err: Error, result: any) => {
-            if(err) console.log(err);
+            if (err) console.log(err);
             console.log(result)
         });
     }
 
-    static deleteOne(id: number, creator_id:number) {
+    static deleteOne(id: number, creator_id: number) {
         pool.query({
             text: 'DELETE FROM Resume WHERE id = $1 AND creator_id = $2;',
             values: [id, creator_id],
         }, (err: Error, result: any) => {
             if (err) console.log(err);
         });
+    }
+
+    static addToHistory(id_user: number, id_resume: id, isFavorite:Boolean) {
+        pool.query({
+            text: 'SELECT *FROM HistoryResume WHERE id_user = $1 AND id_resume = $2;',
+            values: [id_user, id_resume]
+        }, (err: Error, result: any) => {
+            if(err) console.log(err);
+            if(!result){
+                pool.query({
+                    text: 'INSERT INTO HistoryResume (id_user, id_resume) VALUES ($1,$2);',
+                    values: [id_user, id_resume]
+                }, (err2:Error, result2:any)=>{
+                    if(err2) console.log(err2);
+                })
+            } else if(result.rows && result.rows.length > 0){
+                console.log(result.rows[0]);
+            }
+        })
     }
 }
 
@@ -81,12 +98,15 @@ export default Resume;
 export interface _Resume {
     id?: string
     name: string
-    surname:string
+    surname: string
     age: number
     type: string
     position: string
-    location_id: number
-    sub_category_id: number
+    location_id: number | null
+    city_id: number | null
+    country_id: number | null
+    category_id: number | null
+    sub_category_id: number | null
     description: string
     is_public: number
 
