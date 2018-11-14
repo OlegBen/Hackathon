@@ -6,7 +6,6 @@ import Category from "../models/category";
 import {DB} from "../models/base";
 
 
-
 const count = 20;
 
 function generateDataResumes() {
@@ -17,11 +16,8 @@ function generateDataResumes() {
             age: Math.floor(Math.random() * 100),
             type: 'Full',
             position: 'Director',
-            country_id: 1,
-            city_id: null,
-            location_id: null,
-            category_id: 1,
-            sub_category_id: null,
+            location_id: Math.floor(Math.random() * 8) + 1,
+            category_id: Math.floor(Math.random() * (6 - 3 + 1)) + 3,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
             creator_id: i
@@ -36,11 +32,8 @@ function generateDataVacancys() {
             logo: '*Some Logo',
             url: 'google.com',
             position: 'Director',
-            country_id: 1,
-            city_id: null,
-            location_id: null,
-            category_id: 1,
-            sub_category_id: null,
+            location_id: Math.floor(Math.random() * 8) + 1,
+            category_id: Math.floor(Math.random() * (6 - 3 + 1)) + 3,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
             creator_id: 1
@@ -48,38 +41,41 @@ function generateDataVacancys() {
 }
 
 function generateCountrys() {
-    for (let i = 1; i <= 4; i++)
-        Location.createCountry('Country' + i);
+    Location.createCountry('Russia');
+    Location.createCountry('USA');
 }
 
 function generateCitys() {
-    for (let i = 1; i <= 4; i++)
-        for (let j = 1; j <= 4; j++)
-            Location.createCity(`City_${i}_${j}`, i);
+    Location.createCity(`Simferopol`, 1);
+    Location.createCity(`Moscow`, 1);
+    Location.createCity(`New York`, 2);
+    Location.createCity(`Californi`, 2);
 }
 
 function generateLocation() {
-        for (let i = 1; i <= 16; i++)
-            for (let j = 1; j <= 4; j++)
-                Location.createLocation(`Location_${i}_${j}`, j);
+    for (let j = 1; j <= 4; j++) {
+        Location.createLocation(`Location_City${j}_1`, j);
+        Location.createLocation(`Location_City${j}_2`, j);
+    }
 }
 
 function generateCategorys() {
-    for (let i = 1; i <= 4; i++)
-        Category.create('Category' + i);
+    Category.create('Programming');
+    Category.create('Teacher');
 }
 
 function generateSubCategorys() {
-    for (let i = 1; i <= 4; i++)
-        for (let j = 1; j <= 4; j++)
-            Category.createSub(`SubC_${i}_${j}`, i);
+    Category.createSub('Java', 1);
+    Category.createSub('C++', 1);
+    Category.createSub('Math', 2);
+    Category.createSub('Chem', 2);
 }
 
 
-function generateData(req:express.Request, res:express.Response, _:express.NextFunction){
-    switch (req.query.step){
+function generateData(req: express.Request, res: express.Response, _: express.NextFunction) {
+    switch (req.query.step) {
         case '0':
-            DB.createAllTables(()=>{
+            DB.createAllTables(() => {
 
             });
             break;

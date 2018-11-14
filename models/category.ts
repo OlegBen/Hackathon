@@ -11,17 +11,17 @@ class Category {
         });
     }
 
-    static createSub(name: string, idCategory: number) {
+    static createSub(name: string, id_parent: number) {
         pool.query({
-            text: 'INSERT INTO SubCategory (name, id_category) VALUES($1, $2);',
-            values: [name, idCategory],
+            text: 'INSERT INTO Category (name, id_parent) VALUES($1, $2);',
+            values: [name, id_parent],
         }, (err: Error, result: any) => {
             if (err) console.log(err);
         });
     }
 
     static showAll(callback: (data: any[] | null) => void) {
-        pool.query('SELECT *FROM Category;', (err: Error, result: any) => {
+        pool.query('SELECT *FROM Category WHERE id_parent IS NULL;', (err: Error, result: any) => {
             if (err) console.log(err);
             if (result)
                 callback(result.rows);
@@ -30,10 +30,10 @@ class Category {
         });
     }
 
-    static showAllSub(category_id: number, callback: (data: any[] | null) => void) {
+    static showAllSub(id_parent: number, callback: (data: any[] | null) => void) {
         pool.query({
-            text: 'SELECT *FROM SubCategory WHERE id_category = $1;',
-            values: [category_id]
+            text: 'SELECT *FROM Category WHERE id_parent = $1;',
+            values: [id_parent]
         }, (err: Error, result: any) => {
             if (err) console.log(err);
             if (result)

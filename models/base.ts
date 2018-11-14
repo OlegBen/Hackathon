@@ -60,15 +60,9 @@ class DB {
             function (callback: () => void) {
                 cbQueryEmpty('CREATE TABLE IF NOT EXISTS Category(\n' +
                     '    id SERIAL PRIMARY KEY,\n' +
-                    '    name varchar(50)  NOT NULL UNIQUE\n' +
-                    ');', callback);
-            },
-            function (callback: () => void) {
-                cbQueryEmpty('CREATE TABLE IF NOT EXISTS SubCategory(\n' +
-                    '    id SERIAL PRIMARY KEY,\n' +
-                    '    name varchar(50)  NOT NULL UNIQUE,\n' +
-                    '    id_category bigint  NOT NULL,\n' +
-                    '    FOREIGN KEY(id_category) REFERENCES Category(id) ON DELETE CASCADE\n' +
+                    '    name varchar(50)  NOT NULL,\n' +
+                    '    id_parent bigint,\n' +
+                    '    FOREIGN KEY(id_parent) REFERENCES Category(id) ON DELETE CASCADE\n' +
                     ');', callback);
             },
             function (callback: () => void) {
@@ -86,14 +80,10 @@ class DB {
                     '    created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n' +
                     '    creator_id bigint  NOT NULL,\n' +
                     '    FOREIGN KEY(creator_id) REFERENCES Client(id) ON DELETE CASCADE,\n' +
+
                     '    category_id bigint,\n' +
                     '    FOREIGN KEY(category_id) REFERENCES Category(id) ON DELETE SET NULL,\n' +
-                    '    sub_category_id bigint,\n' +
-                    '    FOREIGN KEY(sub_category_id) REFERENCES SubCategory(id) ON DELETE SET NULL,\n' +
-                    '    country_id bigint,\n' +
-                    '    FOREIGN KEY(country_id) REFERENCES Country(id)  ON DELETE SET NULL,\n' +
-                    '    city_id bigint,\n' +
-                    '    FOREIGN KEY(city_id) REFERENCES City(id)  ON DELETE SET NULL,\n' +
+
                     '    location_id bigint,\n' +
                     '    FOREIGN KEY(location_id) REFERENCES Location(id) ON DELETE SET NULL\n' +
                     ');', callback);
@@ -108,38 +98,28 @@ class DB {
                     '    position varchar(100),\n' +
                     '    description text,\n' +
                     '    is_public BIT,\n' +
-                    '    country_id bigint,\n' +
-                    '    FOREIGN KEY(country_id) REFERENCES Country(id) ON DELETE SET NULL,\n' +
-                    '    city_id bigint,\n' +
-                    '    FOREIGN KEY(city_id) REFERENCES City(id) ON DELETE SET NULL,\n' +
+
                     '    location_id bigint,\n' +
                     '    FOREIGN KEY(location_id) REFERENCES Location(id) ON DELETE SET NULL,\n' +
                     '    category_id bigint,\n' +
-                    '    FOREIGN KEY(category_id) REFERENCES Category(id) ON DELETE SET NULL,\n' +
-                    '    sub_category_id bigint,\n' +
-                    '    FOREIGN KEY(sub_category_id) REFERENCES SubCategory(id),\n' +
+
                     '    creator_id bigint NOT NULL UNIQUE,\n' +
                     '    FOREIGN KEY(creator_id) REFERENCES Client(id) ON DELETE CASCADE\n' +
                     ');', callback);
             },
             function (callback: () => void) {
-                cbQueryEmpty('CREATE TABLE IF NOT EXISTS HistoryVacancy(\n' +
+                cbQueryEmpty('CREATE TABLE IF NOT EXISTS History(\n' +
                     '    id SERIAL PRIMARY KEY,\n' +
                     '    isFavorite BIT  NOT NULL,\n' +
                     '    id_user bigint  NOT NULL,\n' +
                     '    FOREIGN KEY(id_user) REFERENCES Client(id) ON DELETE CASCADE,\n' +
+
                     '    id_vacancy bigint  NOT NULL,\n' +
-                    '    FOREIGN KEY(id_vacancy) REFERENCES Vacancy(id) ON DELETE CASCADE\n' +
-                    ');', callback);
-            },
-            function (callback: () => void) {
-                cbQueryEmpty('CREATE TABLE IF NOT EXISTS HistoryResume(\n' +
-                    '    id SERIAL,\n' +
-                    '    isFavorite BIT  NOT NULL,\n' +
-                    '    id_user bigint  NOT NULL,\n' +
-                    '    FOREIGN KEY(id_user) REFERENCES Client(id) ON DELETE CASCADE,\n' +
+                    '    FOREIGN KEY(id_vacancy) REFERENCES Vacancy(id) ON DELETE CASCADE,\n' +
+
                     '    id_resume bigint  NOT NULL,\n' +
-                    '    FOREIGN KEY(id_resume) REFERENCES Resume(id) ON DELETE CASCADE\n' +
+                    '    FOREIGN KEY(id_resume) REFERENCES Resume(id) ON DELETE CASCADE,\n' +
+                    '    type BIT\n' +
                     ');', callback);
             }
         ], callback);
@@ -150,6 +130,8 @@ class DB {
             })
     }
 }
+
+
 
 
 
@@ -190,6 +172,12 @@ function cbQuery(query: string | { text: string, values: any[] }, callback: (e: 
 }
 
 
+function InOrEqualArrQuery(find:string, query: string) {
+    if (query && query.length > 0 && query[0] === '[' && query[query.length - 1] === ']')
+        return ` ${find} IN (${query.substring(1, query.length - 1)}) `;
+    else return ` ${find} = ${query} `
+}
+
 
 interface _authError extends Event {
     message: string
@@ -212,5 +200,6 @@ export {
     DB,
     authError,
     getQueryInsert,
-    cbQuery
+    cbQuery,
+    InOrEqualArrQuery
 }

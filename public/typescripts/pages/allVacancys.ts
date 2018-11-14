@@ -15,7 +15,7 @@ const vacancys = new Vue({
                         <p>{{ v.logo }}</p>
                         <p>{{ v.position }}</p>
                         <p>{{ v.location_id }}</p>
-                        <p>{{ v.sub_category_id }}</p>
+                        <p>{{ v.category_id }}</p>
                         <p>{{ v.description }}</p>                    
                         <p>User: {{ v.creator_id }}</p>       
                         <a :href="'/list_vacancy/' + v.id"><div>Open</div></a>

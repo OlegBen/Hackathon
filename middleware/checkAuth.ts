@@ -33,7 +33,7 @@ function checkEmailValid(text:string) {
 }
 
 function checkOtherValid(text:string | undefined, key:string) {
-    if(!text) return
+    if(!text) return;
     if (!text.match(/[a-z0-9_]+$/i)) return `${key} is Not Valid`;
     else if (text.length < 5) return `${key} is short, need len > 4`;
     else if (text.length > 12) return `${key} is big, need len < 12`;

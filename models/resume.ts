@@ -54,9 +54,9 @@ class Resume {
     static updateOne(id: number, data: _Resume) {
         pool.query({
             text: 'UPDATE Resume SET name = $1 , surname = $2 , age = $3 , type = $4 , position = $5 , location_id = $6 , ' +
-            'sub_category_id = $7 , description = $8 , is_public = $9 WHERE id = $10;',
+            'description = $7 , is_public = $8 WHERE id = $9;',
             values: [data.name, data.surname, data.age, data.type,
-                data.position, data.location_id, data.sub_category_id, data.description,
+                data.position, data.location_id, data.description,
                 data.is_public, id],
         }, (err: Error, result: any) => {
             if (err) console.log(err);
@@ -72,6 +72,9 @@ class Resume {
             if (err) console.log(err);
         });
     }
+
+
+
 
     static addToHistory(id_user: number, id_resume: number, isFavorite:Boolean) {
 
@@ -105,10 +108,7 @@ export interface _Resume {
     type: string
     position: string
     location_id: number | null
-    city_id: number | null
-    country_id: number | null
     category_id: number | null
-    sub_category_id: number | null
     description: string
     is_public: number
 
