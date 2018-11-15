@@ -3,8 +3,7 @@ import {_AuthorizeData, _RequestUser} from "../routes/interfaces";
 import {HttpError} from "../error/index";
 
 
-
-function checkAuth(req:_RequestUser, res:express.Response, next:express.NextFunction) {
+function checkAuth(req: _RequestUser, res: express.Response, next: express.NextFunction) {
     if (!req.user) {
         return next(new HttpError(401, "Вы не авторизованы"));
     }
