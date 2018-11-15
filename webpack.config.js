@@ -32,6 +32,7 @@ module.exports = (env, opt) => {
             main: './public/scss/main.scss',
             frontPage: './public/scss/pages/frontPage.scss',
             error: './public/scss/tools/error.scss',
+            resumeList: './public/scss/pages/resumeList.scss'
         },
 
         module: {
