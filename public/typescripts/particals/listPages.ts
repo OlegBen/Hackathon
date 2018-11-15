@@ -5,6 +5,7 @@ export function createPageList(id:string, loadList:Function){
         data: {
             countButtons: 5,
             count: 0,
+            countSecond:5,
             skipPages: 0,
             id: id
         },
@@ -20,14 +21,14 @@ export function createPageList(id:string, loadList:Function){
                 this.loadPage();
             }
         },
-        template: `<div id="containerListPages">
-                    <button @click=skipPagesIncr(-1) v-if="count > countButtons">left</button>
-                    <div v-for="index in countButtons" :key="index" v-if="index <= count && count > 1">
-                        <input @change="loadPage" type="radio" name="currentPage" :id="id + '_' + index" :value=index-1+skipPages v-if="index === 1" checked>
-                        <input @change="loadPage" type="radio" name="currentPage" :id="id + '_' + index" :value=index-1+skipPages v-else>
-                        <label :for="id + '_' + index" >Page {{index+skipPages}}</label>
+        template: `<div id="containerListPages" class="ListResume-Header">
+                    <button @click=skipPagesIncr(-1)>left</button>
+                    <div v-for="index in countButtons" :key="index" v-if="index <= countSecond && countSecond > 1">
+                        <input style="display: none" @change="loadPage" type="radio" name="currentPage" :id="id + '_' + index" :value=index-1+skipPages v-if="index === 1" checked>
+                        <input style="display: none" @change="loadPage" type="radio" name="currentPage" :id="id + '_' + index" :value=index-1+skipPages v-else>
+                        <button :for="id + '_' + index" >{{index+skipPages}}</button>
                    </div>
-                   <button @click=skipPagesIncr(1)  v-if="count > countButtons">right</button>
+                   <button @click=skipPagesIncr(1)>right</button>
                    <p v-if="count > countButtons">Страниц {{count}}</p>
                </div>`
     });

@@ -22,6 +22,9 @@
   float: right !important;
 }
 
+html, body, .page__wrapper{
+  height: 100%;
+}
 
 
 @import "tools/navbar";

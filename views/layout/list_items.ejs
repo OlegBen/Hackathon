@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+    <link rel="stylesheet" href="/dist/main.min.css">
+</head>
+<body>
+<main class="page__wrapper">
+    <header class="Nav">
+        <div class="Nav-Left">
+            <!-- Логотип -->
+            <div class="Nav-LogoText">
+                <span>我</span>
+                <span class="text-style-1">wō</span>
+            </div>
+            <div class="Nav-LogoIcon">
+                <span>RKED</span>
+            </div>
+
+            <!-- Ссылки -->
+            <div class="Nav-Links">
+                <a href="#">Новости</a>
+                <a href="#">Отзывы</a>
+                <a href="#">О нас</a>
+            </div>
+        </div>
+
+        <div class="Nav-Right">
+            <!-- Настройки -->
+            <div class="Nav-Settings">icon</div>
+
+            <!-- Аватарка -->
+            <div class="Nav-Avatar">
+                <a href="#"></a>
+            </div>
+
+            <!-- Кнопка входа или выхода -->
+            <div class="Nav-Exit">
+                <a href="#">Выйти</a>
+            </div>
+
+            <div>
+                <div class="Nav-Triangle-whiteLine"></div>
+                <div class="Nav-Triangle"></div>
+                <span class="Nav-Triangle-text">BETA</span>
+                <span class="Nav-Triangle-version">1.0</span>
+            </div>
+        </div>
+    </header>
+    <%- body %>
+</main>
+</body>
+</html>
