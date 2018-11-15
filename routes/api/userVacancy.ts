@@ -16,7 +16,7 @@ function get(req: _RequestSettUser, res: express.Response, __: express.NextFunct
                     creator_id: result.id,
                     companion: {is_public: 1}
                 }, req.server_settings.vacancy.count, (arr: _Vacancy[], countPages: number) => {
-                    res.send(JSON.stringify(arr));
+                    res.send(JSON.stringify({arr:arr, countPages:countPages}));
                 });
             else
                 res.send(JSON.stringify("Fuck You"));
