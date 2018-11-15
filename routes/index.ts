@@ -3,6 +3,7 @@ import express = require('express')
 
 const router = express.Router();
 const {checkAuth} = require('../middleware/checkAuth');
+const checkPermissions = require('../middleware/checkApiPerm');
 const {generateData} = require('./generateData');
 
 router.get('/generate',  generateData);
@@ -27,11 +28,11 @@ router.get('/history_search', checkAuth, require('./pages/user/historySearch').g
 
 
 /* Сбор данных */
-router.get('/api/user_vacancy', checkAuth, require('./api/userVacancy').get);
-router.get('/api/all_vacancy',  require('./api/allVacancy').get);
-router.get('/api/all_resume',  require('./api/allResume').get);
-router.get('/api/get_location',  require('./api/allLocations').get);
-router.get('/api/get_category',  require('./api/allCategotys').get);
+router.get('/api/user_vacancy', checkPermissions, checkAuth, require('./api/userVacancy').get);
+router.get('/api/all_vacancy', checkPermissions, require('./api/allVacancy').get);
+router.get('/api/all_resume', checkPermissions, require('./api/allResume').get);
+router.get('/api/get_location', checkPermissions, require('./api/allLocations').get);
+router.get('/api/get_category', checkPermissions, require('./api/allCategotys').get);
 
 
 router.post('/admin_panel', checkAuth, require('./pages/adminPanel').post);
