@@ -42,7 +42,7 @@ function getDataFromReq(req:_RequestUser){
         age: parseInt(req.body.rm_age),
         type: req.body.rm_type,
         position: req.body.rm_position,
-        location_id: req.body.rm_location_id ? parseInt(req.body.rm_location_id) : null,
+        city_id: req.body.rm_city_id ? parseInt(req.body.rm_city_id) : null,
         category_id: req.body.rm_category_id ? parseInt(req.body.rm_category_id) : null,
         description: req.body.rm_description,
         is_public: req.body.rm_is_public === 'on' ? 1 : 0,

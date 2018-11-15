@@ -39,10 +39,6 @@ function post(req: _RequetsSett, res: express.Response, __: express.NextFunction
             if (req.body.city_name && req.body.country_id)
                 Location.createCity(req.body.city_name, req.body.country_id);
             break;
-        case 'location':
-            if (req.body.location_name && req.body.city_id)
-                Location.createLocation(req.body.location_name, req.body.city_id);
-            break;
         case 'category':
             if (req.body.category_name)
                 Category.create(req.body.category_name);

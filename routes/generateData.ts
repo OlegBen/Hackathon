@@ -16,7 +16,7 @@ function generateDataResumes() {
             age: Math.floor(Math.random() * 100),
             type: 'Full',
             position: 'Director',
-            location_id: Math.floor(Math.random() * 8) + 1,
+            city_id: Math.floor(Math.random() * 4) + 1,
             category_id: Math.floor(Math.random() * (6 - 3 + 1)) + 3,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
@@ -32,7 +32,7 @@ function generateDataVacancys() {
             logo: '*Some Logo',
             url: 'google.com',
             position: 'Director',
-            location_id: Math.floor(Math.random() * 8) + 1,
+            city_id: Math.floor(Math.random() * 4) + 1,
             category_id: Math.floor(Math.random() * (6 - 3 + 1)) + 3,
             description: 'Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions Some descriptions',
             is_public: 1,
@@ -52,12 +52,6 @@ function generateCitys() {
     Location.createCity(`Californi`, 2);
 }
 
-function generateLocation() {
-    for (let j = 1; j <= 4; j++) {
-        Location.createLocation(`Location_City${j}_1`, j);
-        Location.createLocation(`Location_City${j}_2`, j);
-    }
-}
 
 function generateCategorys() {
     Category.create('Programming');
@@ -75,9 +69,7 @@ function generateSubCategorys() {
 function generateData(req: express.Request, res: express.Response, _: express.NextFunction) {
     switch (req.query.step) {
         case '0':
-            DB.createAllTables(() => {
-
-            });
+            DB.createAllTables();
             break;
         case '1':
             generateCountrys();
@@ -90,13 +82,9 @@ function generateData(req: express.Request, res: express.Response, _: express.Ne
             console.log(2);
             break;
         case '3':
-            generateLocation();
-            console.log(3);
-            break;
-        case '4':
             generateDataVacancys();
             generateDataResumes();
-            console.log(4);
+            console.log(3);
             break;
     }
     res.redirect('/')

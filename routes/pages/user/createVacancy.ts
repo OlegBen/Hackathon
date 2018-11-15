@@ -43,7 +43,7 @@ function getDataFromReq(req: _RequestUser) {
         logo: req.body.cv_logo,
         url: req.body.cv_url,
         position: req.body.cv_position,
-        location_id: req.body.cv_location_id ? parseInt(req.body.cv_location_id) : null,
+        city_id: req.body.cv_city_id ? parseInt(req.body.cv_city_id) : null,
         category_id: req.body.cv_category_id ? parseInt(req.body.cv_category_id) : null,
         description: req.body.cv_description,
         is_public: req.body.cv_is_public === 'on' ? 1 : 0,

@@ -8,8 +8,7 @@ const resumes = new Vue({
     template: `<div>
                     <div v-for="v in arr">
                         <h1>{{ v.name }}</h1>
-                        <p>{{ v.age }}</p>
-                        <p>User{{v.creator_id}}</p>
+                        <p>{{ v.age }}</p>        
                         <a :href="'/list_resume/' + v.id"><div>Open</div></a>
                     </div>
                </div>`

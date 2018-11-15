@@ -4,20 +4,15 @@ import Location from "../../models/location";
 
 
 function get(req: _RequestSettUser, res: express.Response, __: express.NextFunction) {
-    if (req.query.country == 'true')
-        Location.showAllCountrys((arr: any) => {
-            res.send(JSON.stringify({arr: arr}));
-        });
-    else if (req.query.country_id)
+    const country_id = req.query.country_id;
+    if (country_id)
         Location.showAllCitysFromCountry(req.query.country_id, (arr: any) => {
             res.send(JSON.stringify({arr: arr}));
         });
-    else if (req.query.city_id)
-        Location.showAllLocationsFromCity(req.query.city_id, (arr: any) => {
-            res.send(JSON.stringify({arr: arr}));
-        });
     else
-        res.send(JSON.stringify({status:404}));
+        Location.showAllCountrys((arr: any) => {
+            res.send(JSON.stringify({arr: arr}));
+        })
 }
 
 module.exports = {get};

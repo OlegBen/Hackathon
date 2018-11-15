@@ -12,7 +12,6 @@ class Vacancy {
     static getAllPublicQuery(query: any, countInPage: number, callback: (vacancyArr: _Vacancy[], countInPage: number) => void) {
         const country = query.country_id;
         const city = query.city_id;
-        const location = query.location_id;
         const category = query.category_id;
         const sub_category = query.sub_category_id;
 
@@ -30,28 +29,27 @@ class Vacancy {
             where += ` AND category_id IN (SELECT id FROM Category WHERE ${InOrEqualArrQuery('category_id', category)})`;
 
 
-        if (location)
-            where += ` AND ${InOrEqualArrQuery('location_id', location)}`;
-        else if (city)
-            where += ` AND location_id IN (SELECT id FROM Location WHERE ${InOrEqualArrQuery('id_city', city)})`;
+        if (city)
+            where += ` AND ${InOrEqualArrQuery('city_id', city)}`;
         else if (country)
-            where += ` AND location_id IN (SELECT id FROM Location WHERE id_city IN (SELECT id FROM City WHERE ${InOrEqualArrQuery('id_country', country)}))`;
+            where += ` AND city_id IN (SELECT id FROM City WHERE ${InOrEqualArrQuery('country_id', country)})`;
 
 
         let limitOffset = query.page ? ` LIMIT ${countInPage} OFFSET ${query.page * countInPage}` : '';
         let join = 'INNER JOIN Client ON v.creator_id = Client.id';
         join +=
-            ' LEFT  JOIN Category AS SubCategory ON v.category_id = SubCategory.id' +
-            ' LEFT  JOIN Category Category ON SubCategory.id_parent = Category.id';
+            ' LEFT JOIN Category AS SubCategory ON v.category_id = SubCategory.id' +
+            ' LEFT JOIN Category Category ON SubCategory.id_parent = Category.id';
         join +=
-            ' LEFT  JOIN Location ON v.location_id = Location.id' +
-            ' LEFT  JOIN City ON Location.id_city = City.id' +
-            ' LEFT  JOIN Country ON City.id_country = Country.id';
-        let select = 'v.company, v.type, v.logo, v.url, v.position, v.description, v.is_public, ' +
-            'v.created, v.phone, v.category_id, v.location_id, ' +
+            ' LEFT JOIN City ON v.city_id = City.id' +
+            ' LEFT JOIN Country ON City.country_id = Country.id';
+        let select =
+            'v.company, v.type, v.logo, v.url, v.position, v.description, v.is_public, ' +
+            'v.created, v.phone, v.category_id,  ' +
             'SubCategory.name as sub_category_name, Category.name as category_name, ' +
-            'Location.name as location_name, City.name as city_name, City.id, Country.name as country_name, Country.id, Client.email, v.id';
+            'City.name as city_name, City.id as city_id, Country.name as country_name, Country.id as country_id, Client.email, v.id';
         let order = 'ORDER BY v.id';
+
 
         pool.query({
             text: `SELECT ${select} FROM Vacancy AS v ${join} ${where} ${order} ${limitOffset};`,
@@ -88,10 +86,10 @@ class Vacancy {
 
     static updateOne(id: number, data: _Vacancy) {
         pool.query({
-            text: 'UPDATE Vacancy SET company = $1 , type = $2 , url = $3 , logo = $4 , position = $5 , location_id = $6 , ' +
+            text: 'UPDATE Vacancy SET company = $1 , type = $2 , url = $3 , logo = $4 , position = $5 , city_id = $6 , ' +
             'description = $7 , is_public = $8 , phone = $9 , token = $10  WHERE id = $11;',
             values: [data.company, data.type, data.url, data.logo,
-                data.position, data.location_id, data.description,
+                data.position, data.city_id, data.description,
                 data.is_public, data.phone, data.token, id],
         }, (err: Error, result: any) => {
             if (err) console.log(err);
@@ -111,13 +109,13 @@ class Vacancy {
 export default Vacancy;
 
 export interface _Vacancy {
-    id?: string
+    id?: number
     company: string
     type: string
     logo?: string
     url?: string
     position: string
-    location_id: number | null
+    city_id: number | null
     category_id: number | null
     description: string
     is_public: number
