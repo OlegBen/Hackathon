@@ -1,38 +1,29 @@
-html, body {
-  padding:0;
-  margin:0;
-  height:100%;
-  width:100%;
-}
-header {
-  margin-left: 70px;
-}
-a {
-  text-decoration: none;
-}
-
-.background--black {
-  width: 100%;
-  height: 100%;
-  background-image: url(../47797.jpg);
-}
-
-
-.floatLeft {
+.Nav-Left {
   float: left;
 }
-.floatRight {
+
+.Nav-Right {
   float: right;
   margin-right: 139px;
-  margin-top: 13px;
+  line-height: 60px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
 }
 
-.clear {
-  clear: both;
+body {
+  background: black;
 }
 
 /*Логотип*/
-.-w {
+.Nav {
+  background: gray;
+  height: 60px;
+  line-height: 60px;
+}
+
+.Nav-LogoText {
   width: 22px;
   height: 39.5px;
   text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.16);
@@ -46,14 +37,16 @@ a {
   text-align: center;
   color: #daa520;
   padding-top: 7px;
-  display:inline-block;
+  display: inline-block;
 }
-.-w .text-style-1 {
+
+.Nav-LogoText .text-style-1 {
   font-size: 15px;
   font-style: "SegoeUIBlack-Italic";
   color: #ffffff;
 }
-.logo {
+
+.Nav-LogoIcon {
   width: 108px;
   height: 53px;
   text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.16);
@@ -66,21 +59,22 @@ a {
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
-  display:inline-block;
+  display: inline-block;
 }
 
 /*Ссылки*/
-.link {
+.Nav-Links {
   width: 197.5px;
   height: 20px;
   text-align: left;
-  display:inline-block;
+  display: inline-block;
   padding-left: 17px;
   line-height: 1.33;
   transform: translateY(-50%);
   letter-spacing: normal;
 }
-.link a {
+
+.Nav-Links > a {
   color: #ffffff;
   font-size: 15px;
   font-weight: bold;
@@ -91,7 +85,7 @@ a {
 }
 
 /*Настройки*/
-.settings {
+.Nav-Settings {
   width: 19px;
   height: 15.5px;
   font-family: FontAwesome5FreeSolid;
@@ -103,27 +97,27 @@ a {
   letter-spacing: normal;
   text-align: left;
   color: #ffffff;
-  display:inline-block;
+
   margin-right: 12px;
   transform: translateY(-10%);
 }
 
 /*Аватарка*/
-.ava__square {
+.Nav-Avatar {
   width: 30px;
   height: 30px;
   border: solid 2.5px #ffffff;
-  display: inline-block;
-  transform: translateY(-10%);
+
   margin-right: 8px;
 }
-.ava__square a {
+
+.Nav-Avatar > a {
   height: 100%;
   display: block;
 }
 
 /*Кнопка входа или выхода*/
-.enterExitBtn{
+.Nav-Exit {
   width: 53px;
   height: 20px;
   font-family: SegoeUI;
@@ -134,61 +128,38 @@ a {
   line-height: 1.33;
   letter-spacing: normal;
   text-align: center;
-  display: inline-block;
+
   margin-right: 43px;
-  transform: translateY(-80%);
 }
-.enterExitBtn a {
+
+.Nav-Exit > a {
   color: #daa520;
 }
 
-/*Язык сайта*/
-.EN-RU {
-  width: 41px;
-  height: 15.5px;
-  font-family: SegoeUI;
-  font-size: 11.5px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.17;
-  letter-spacing: normal;
-  text-align: center;
-  display: inline-block;
-  transform: translateY(-80%);
-}
-.EN-RU a {
-  color: #707070;
-  float:left;
-  margin-right: 4px;
-}
-.EN-RU .text-style-1 {
-  color: #ffffff;
-  text-decoration: underline;
-}
-
 /*Треугольник с версией сайта*/
-.Path-4 {
+.Nav-Triangle {
   width: 0;
   height: 0;
-  position:absolute;
-  right:0px;
-  top:0px;
-  display:inline-block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  display: inline-block;
   border-left: 102.4px solid transparent;
   border-top: 173.4px solid #daa520;
 }
-.white-line-Path-4{
+
+.Nav-Triangle-whiteLine {
   width: 0;
   height: 0;
-  position:absolute;
-  right:0px;
-  top:0px;
-  display:inline-block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  display: inline-block;
   border-left: 104.9px solid transparent;
   border-top: 178.4px solid #ffffff;
 }
-.BETA {
+
+.Nav-Triangle-text {
   width: 53px;
   height: 26.5px;
   font-family: SegoeUI;
@@ -200,11 +171,12 @@ a {
   letter-spacing: normal;
   text-align: center;
   color: #2d2d2d;
-  top:13.2px;
-  right:11.9px;
+  top: 13.2px;
+  right: 11.9px;
   position: absolute;
 }
-.version {
+
+.Nav-Triangle-version {
   width: 36px;
   height: 33.5px;
   font-family: SegoeUI;
@@ -217,449 +189,98 @@ a {
   text-align: center;
   color: #ffffff;
   position: absolute;
-  top:39.5px;
-  right:12px;
+  top: 39.5px;
+  right: 12px;
 }
 
-
-/*Фильтр*/
-.filter{
-  margin-left: 70px;
-  margin-top: 9.5px;
-  display: inline-block;
+.ContainerContent {
+  margin-right: 5%;
+  margin-left: 5%;
+  width: 90%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
-/*Название*/
-.vacansy-title {
-  width: 112.5px;
-  height: 33.5px;
-  font-family: SegoeUI;
-  font-size: 12.5px;
-  font-weight: 900;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.36;
-  letter-spacing: normal;
-  color: #2d2d2d;
+.Filter {
+  background: #5da2a6;
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
 }
-.vacansy-title__placeholder {
-  width: 199px;
-  height: 30px;
-  background-color: #ffffff;
+
+.Filter-Title {
+  height: 40px;
+  font-size: 25px;
+  background: white;
   text-align: center;
-  vertical-align: middle;
-  display: table-cell;
-}
-
-
-/*Левый фильтр*/
-.left__filter {
-  width: 199px;
-  height: 480px;
-  background: rgba(218, 165, 32, 0.7);
-  padding-top: 14px;
-}
-
-/*Надпись города*/
-.Rectangle-133 {
-  width: 65.3px;
-  height: 20px;
-  background-color: #ffffff;
-  padding-left: 7.7px;
-  display: inline-block;
-}
-.A {
-  width: 41px;
-  height: 13.5px;
-  font-family: SegoeUI;
-  font-size: 12px;
+  color: #000;
   font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.35;
-  letter-spacing: normal;
-  text-align: left;
-  color: #2d2d2d;
+  font-family: Arial;
 }
 
-/*Применить*/
-.applyBtn {
-  width: 56.5px;
-  height: 13.5px;
-  text-align: left;
-  display: inline-block;
-  margin-left: 8.2px;
-}
-.applyBtn a {
-  color: #ffffff;
-  text-decoration: underline;
-  font-family: SegoeUI;
-  font-size: 12px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.35;
-  letter-spacing: normal;
-}
-
-/*Список городов*/
-.cityList {
-  height: 145.3px;
-  width: 199px;
-  border-top: 1px solid #ffffff;
-  border-bottom: 1px solid #ffffff;
-  margin-top: 10.1px;
-}
-
-/*Название категория*/
-.marTop10 {
-  margin-top: 10.1px;
-}
-
-.category {
-  width: 65.3px;
-  height: 20px;
-  background-color: #ffffff;
-  padding-left: 7.7px;
-  display: inline-block;
-}
-
-.categoryList {
-  height: 145.3px;
-  width: 199px;
-  border-top: 1px solid #ffffff;
-  border-bottom: 1px solid #ffffff;
-  margin-top: 10.1px;
-}
-
-/*Показать больше(две стрелочки вниз)*/
-.down__dangle {
-  width: 13px;
-  height: 20.5px;
-  font-family: FontAwesome5FreeSolid;
-  font-size: 20px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.03;
-  letter-spacing: normal;
-  text-align: center;
-  color: #2d2d2d;
-  margin-top: 5px;
-  margin-left: 93px;
-}
-
-/*Кнопки*/
-.bottom_placeholder {
-  width: 179px;
-  height: 33px;
-  background-color: #ffffff;
-  margin-left: 10px;
-  margin-top: 10.5px;
-  border: none;
+.Filter-Scroll {
+  overflow-y: scroll;
+  height: 200px;
+  padding-top: 15px;
   box-sizing: border-box;
-  text-align: center;
-}
-.bottom_placeholder.return {
-  margin-top: 5.5px;
-}
-
-/*Название кнопки*/
-.btnName {
-  width: 66px;
-  height: 10px;
-  font-family: SegoeUI;
-  font-size: 12px;
-  font-weight: 900;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.33;
-  letter-spacing: normal;
-  text-align: center;
-  color: #2d2d2d;
+  p {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+  }
 }
 
-.resume {
-  display: inline-block;
-  vertical-align: top;
+.Filter-Second {
+  height: 70px;
+  > div {
+    border-bottom: solid 2px white;
+    border-top: solid 2px white;
+    line-height: 70px;
+    > button {
+      height: 40px;
+      font-size: 25px;
+      background: white;
+      text-align: center;
+      color: #000;
+      font-weight: bold;
+      font-family: Arial;
+    }
+    > a {
+      margin-left: 15px;
+      color: white;
+    }
+  }
 }
 
-/*Пагинация*/
-.Rectangle-126 {
-  width: 207px;
-  height: 20px;
-  background-color: #ffffff;
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 28px;
-  margin-left: 6px;
-}
-/*Предыдущая страница*/
-.previousPage {
-  width: 63px;
-  height: 13.5px;
-  text-align: left;
-  margin-left: 6px;
-}
-.previousPage a {
-  font-family: SegoeUI;
-  font-size: 10px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.35;
-  letter-spacing: normal;
-  color: #2d2d2d;
-  text-decoration: underline;
+.Filter-ContainerButtons {
+  > button {
+    width: 100%;
+    height: 70px;
+    font-size: 20px;
+    background: white;
+    text-align: center;
+    color: #000;
+    font-weight: bold;
+    font-family: Arial;
+  }
+  >img{
+    height: 40px;
+    width: 40px;
+    background: green;
+  }
 }
 
-/*Номера страниц*/
-.numPages {
-  width: 51px;
-  height: 13.5px;
-  text-align: left;
-  display: inline-block;
-}
-.numPages a {
-  font-family: SegoeUI;
-  font-size: 12px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.35;
-  letter-spacing: normal;
-  color: #2d2d2d;
-}
-.numPages a.text-style-1 {
-  font-weight: 900;
-  border: 1px solid #daa520;
-  padding: 0 1px;
+.ListResume {
+  background: #51a662;
+  grid-column: span 3;
+  > .ListResume-Header{
+    height: 80px;
+    width: 100%;
+  }
+  > .ListResume-Content{
+    width: 100%;
+    height: 100%;
+  }
 }
 
-/*Следующая страница*/
-.nextPage {
-  width: 63px;
-  height: 13.5px;
-  text-align: left;
-  margin-right: 5.5px;
-}
-.nextPage a {
-  font-family: SegoeUI;
-  font-size: 10px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.35;
-  letter-spacing: normal;
-  color: #2d2d2d;
-  text-decoration: underline;
-}
-
-/*Стрелка на пагинации(следующая страница)*/
-.Rectangle-127 {
-  width: 18.5px;
-  height: 10px;
-  background-color: #daa520;
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 33px;
-  margin-left: -4px;
-}
-.Path-19 {
-  width: 0px;
-  height: 0px;
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 22px;
-  margin-left: -20px;
-  border: 15.9px solid transparent;
-  border-left: 31.8px solid #daa520;
-}
-
-/*Див для резюме размер 94px на 613px*/
-.resumeList {
-  margin-top: 8px;
-  margin-left: 6px;
-}
-.resume__block__container {
-  width: 613px;
-  height: 94px;
-  background-color: #ffffff;
-  margin-top: 8px;
-}
-.eyebookmark__field {
-  width: 613px;
-  height: 14px;
-  background-color: #daa520;
-  text-align: left;
-}
-
-/*Время создания\добавления резюме*/
-.time {
-  width: 150px;
-  height: 17px;
-  font-family: SegoeUI;
-  font-size: 10px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.33;
-  letter-spacing: normal;
-  text-align: left;
-  color: #2d2d2d;
-  vertical-align: top;
-  text-decoration: underline;
-  margin-left: 11px;
-}
-
-/*Изображение пользователя*/
-.info {
-  width: 26.5px;
-  height: 31px;
-  font-family: FontAwesome5FreeSolid;
-  font-size: 30px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.03;
-  letter-spacing: normal;
-  text-align: left;
-  color: #2d2d2d;
-  background-color: #2d2d2d;
-  display: inline-block;
-  margin-top: 24.4px;
-  margin-left: 30.5px;
-}
-
-/*Имя пользователя и иконки соц.сетей*/
-.userNickSocialN {
-  margin-top: 22px;
-  margin-left: 33px;
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
-}
-.userNick{
-  width: 86.5px;
-  height: 16.5px;
-  font-family: SegoeUI;
-  font-size: 12.5px;
-  font-weight: 900;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.36;
-  letter-spacing: normal;
-  text-align: left;
-  color: #2d2d2d;
-}
-.socialN {
-  width: 39px;
-  height: 11px;
-  font-family: FontAwesome5Brands;
-  font-size: 10px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.1;
-  letter-spacing: normal;
-  text-align: center;
-  color: #2d2d2d;
-}
-
-.bookmark {
-  width: 16px;
-  height: 22.5px;
-  font-family: FontAwesome5FreeSolid;
-  font-size: 21.5px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.05;
-  letter-spacing: normal;
-  text-align: left;
-  background-color: #2d2d2d;
-  color: #2d2d2d;
-  display: inline-block;
-}
-.eye {
-  width: 24px;
-  height: 22.5px;
-  font-family: FontAwesome5FreeSolid;
-  font-size: 21.5px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.05;
-  letter-spacing: normal;
-  text-align: left;
-  color: #2d2d2d;
-  background-color: #2d2d2d;
-  display: inline-block;
-  margin-right: 12px;
-}
-.icon {
-  margin-right: 12.1px;
-  transform: translateY(-40%);
-  text-align: right;
-}
-
-.right {
-  float: right;
-}
-
-.more__buttton {
-  width: 77px;
-  height: 27.1px;
-  background-color: #2d2d2d;
-  border: none;
-  margin-right: 8px;
-}
-.more__name {
-  width: 60.5px;
-  height: 13px;
-  font-family: SegoeUI;
-  font-size: 11px;
-  font-weight: 900;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.37;
-  letter-spacing: normal;
-  text-align: left;
-  color: #ffffff;
-}
-
-.wide__block--short-description {
-  width: 218.5px;
-  height: 54px;
-  font-family: SegoeUI;
-  font-size: 10px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.35;
-  letter-spacing: normal;
-  text-align: left;
-  color: #2d2d2d;
-  display: inline-block;
-  vertical-align: middle;
-  overflow: hidden;
-}
-
-.getInfo {
-  width: 20px;
-  height: 20.5px;
-  font-family: FontAwesome5FreeSolid;
-  font-size: 20px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.03;
-  letter-spacing: normal;
-  text-align: left;
-  color: #2d2d2d;
-  background-color: #2d2d2d;
-  display: inline-block;
-  border-radius: 50%;
-  margin-right: 10.5px;
-  vertical-align: top;
-}

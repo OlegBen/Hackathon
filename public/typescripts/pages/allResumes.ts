@@ -5,10 +5,12 @@ const resumes = new Vue({
     el: '#containerResumes',
     data:{arr: []},
     methods: {},
-    template: `<div>
+    template: `<div class="ListResume-Header">
                     <div v-for="v in arr">
                         <h1>{{ v.name }}</h1>
-                        <p>{{ v.age }}</p>        
+                        <p>{{ v.age }}</p>   
+                         <p>{{ v.description }}</p>  
+                          <p>{{ v.position }}</p>                   
                         <a :href="'/list_resume/' + v.id"><div>Open</div></a>
                     </div>
                </div>`
