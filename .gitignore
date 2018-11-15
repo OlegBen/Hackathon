@@ -4,9 +4,8 @@ npm-debug.log
 
 
 
+
 public/dist
-
-
 
 # Local development
 *.env
