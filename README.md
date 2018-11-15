@@ -38,7 +38,7 @@ npm start
 npm run hermione
 ```
 
-## Deploying to Heroku
+## Deploying to heroku
 ```
 $ heroku auth:token
 $ git push heroku master
