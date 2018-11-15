@@ -1,5 +1,5 @@
 import express = require('express')
-import {_Session, _RequestSession, _User} from '../../interfaces'
+import { _RequestSession, _User} from '../../interfaces'
 import User from "../../../models/user";
 import {authError} from "../../../models/base";
 import {HttpError} from "../../../error/index";

@@ -29,7 +29,7 @@ class User {
                             if (result.length > 0)
                                 callback(null, result[0]);
                             else
-                                callback(new authError('Пользователь не найден'));
+                                callback(new authError('Ошибка!'));
                         });
                     });
                 }
