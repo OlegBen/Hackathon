@@ -1,4 +1,5 @@
 <% layout('../../layout/page.ejs') %>
+<link rel="stylesheet" href="./pablic/dist/resumeList.css">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 <div id="containerResumes"></div>
 
@@ -8,3 +9,187 @@
 
 <script src="/dist/allResumes.min.js"></script>
 
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>resumeList</title>
+    <link rel="stylesheet" href="./Style/resumeList.css">
+</head>
+<body>
+<div class="background--black">
+
+    <header>
+        <div class="floatLeft">
+            <!-- Логотип -->
+            <div class="-w">
+                <span>我</span>
+                <span class="text-style-1">wō</span>
+            </div>
+            <div class="logo">
+                <span>RKED</span>
+            </div>
+
+            <!-- Ссылки -->
+            <div class="link">
+                <a href="#">Новости</a>
+                <a href="#">Отзывы</a>
+                <a href="#">О нас</a>
+            </div>
+        </div>
+
+        <div class="floatRight">
+            <!-- Настройки -->
+            <div class="settings">icon</div>
+
+            <!-- Аватарка -->
+            <div class="ava__square">
+                <a href="#"></a>
+            </div>
+
+            <!-- Кнопка входа или выхода -->
+            <div class="enterExitBtn">
+                <a href="#">Выйти</a>
+            </div>
+
+            <!-- Язык сайта -->
+            <div class="EN-RU">
+                <a href="#">EN</a>
+                <a href="#" class="text-style-1">RU</a>
+            </div>
+
+            <!--  Треугольник с версией сайта  -->
+            <div>
+                <div class="white-line-Path-4"></div>
+                <div class="Path-4"></div>
+                <span class="BETA">BETA</span>
+                <span class="version">1.0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="clear"></div>
+
+    <div class="filter">
+        <div class="vacansy-title__placeholder"><span class="vacansy-title">СПИСОК РЕЗЮМЕ</span></div>
+        <div class="left__filter">
+            <div class="Rectangle-133"><span class="A">ГОРОДА</span></div>
+            <div class="applyBtn"><a href="#">Применить</a></div>
+
+            <div class="cityList"></div>
+
+            <div class="marTop10">
+                <div class="category"><span class="A">Категории</span></div>
+                <div class="applyBtn"><a href="#">Применить</a></div>
+            </div>
+
+            <div class="categoryList"></div>
+
+            <div class="down__dangle">↓↓</div>
+
+            <button class="bottom_placeholder"><span class="btnName">Применить все</span></button>
+            <button class="bottom_placeholder return"><span class="btnName">Вернуться на прошлую страницу</span></button>
+        </div>
+    </div>
+
+    <div class="resume">
+        <div class="Rectangle-126">
+            <span class="previousPage"><a href="#">Пр.Страница</a></span>
+            <div class="numPages">
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#" class="text-style-1">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+            </div>
+            <span class="nextPage"><a href="#">След.Страница</a></span>
+        </div>
+
+        <!--Треугольник для следующей страницы-->
+        <div class="Rectangle-127"></div>
+        <div class="Path-19"></div>
+
+        <!--Блок резюме-->
+        <div class="resumeList">
+
+            <div class="resume__block__container">
+                <div class="eyebookmark__field"> <span class="time">15:05 15.11.2018</span> </div>
+                <div class="content">
+                    <div class="floatLeft">
+                        <div class="info"></div>
+                        <div class="userNickSocialN">
+                            <span class="userNick">МИЛЛИОНЕР</span>
+                            <div class="socialN">
+                                s.icon
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="icon">
+                            <div class="eye"></div>
+                            <div class="bookmark"></div>
+                        </div>
+                        <div class="getInfo"></div>
+                        <div class="wide__block--short-description">Lorem Ipsum - это текст-&quot;рыба&quot;, часто используемый в печати и вэб-дизайне.Lorem Ipsum - это текст-&quot;рыба&quot;, часто спользуемый в печати и вэб-дизайне. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum, saepe.</div>
+                        <button class="more__buttton"><span class="more__name">Подробнее</span></button>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="resume__block__container">
+                    <div class="eyebookmark__field"> <span class="time">15:05 15.11.2018</span> </div>
+                    <div class="content">
+                        <div class="floatLeft">
+                            <div class="info"></div>
+                            <div class="userNickSocialN">
+                                <span class="userNick">МИЛЛИОНЕР</span>
+                                <div class="socialN">
+                                    s.icon
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="icon">
+                                <div class="eye"></div>
+                                <div class="bookmark"></div>
+                            </div>
+                            <div class="getInfo"></div>
+                            <div class="wide__block--short-description">Lorem Ipsum - это текст-&quot;рыба&quot;, часто используемый в печати и вэб-дизайне.Lorem Ipsum - это текст-&quot;рыба&quot;, часто спользуемый в печати и вэб-дизайне. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum, saepe.</div>
+                            <button class="more__buttton"><span class="more__name">Подробнее</span></button>
+                        </div>
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <div class="resume__block__container">
+                        <div class="eyebookmark__field"> <span class="time">15:05 15.11.2018</span> </div>
+                        <div class="content">
+                            <div class="floatLeft">
+                                <div class="info"></div>
+                                <div class="userNickSocialN">
+                                    <span class="userNick">МИЛЛИОНЕР</span>
+                                    <div class="socialN">
+                                        s.icon
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="icon">
+                                    <div class="eye"></div>
+                                    <div class="bookmark"></div>
+                                </div>
+                                <div class="getInfo"></div>
+                                <div class="wide__block--short-description">Lorem Ipsum - это текст-&quot;рыба&quot;, часто используемый в печати и вэб-дизайне.Lorem Ipsum - это текст-&quot;рыба&quot;, часто спользуемый в печати и вэб-дизайне. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum, saepe.</div>
+                                <button class="more__buttton"><span class="more__name">Подробнее</span></button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
