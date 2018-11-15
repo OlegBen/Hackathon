@@ -104,6 +104,19 @@ class Vacancy {
             if (err) console.log(err);
         });
     }
+
+    static checkCompanionToken(id_companion:number, token:string, callback:(id_user: number | null)=>void){
+        pool.query({
+            text: 'SELECT id_user FROM Companion WHERE id_companion = $1 AND token = $2;',
+            values: [id_companion, token],
+        }, (err: Error, result: any) => {
+            if (err) console.log(err);
+            if (result && result.rows.length > 0)
+                callback(result.rows[0]);
+            else
+                callback(null);
+        });
+    }
 }
 
 export default Vacancy;
