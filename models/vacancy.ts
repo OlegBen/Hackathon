@@ -104,6 +104,10 @@ class Vacancy {
             if (err) console.log(err);
         });
     }
+
+    static checkCompanionToken(){
+
+    }
 }
 
 export default Vacancy;

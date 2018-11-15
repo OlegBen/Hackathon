@@ -38,7 +38,6 @@ class DB {
         email varchar(40) NOT NULL UNIQUE,
         hashed_password varchar(50) NOT NULL,
         salt varchar(100) NOT NULL,
-        role varchar(10),
         created timestamp DEFAULT CURRENT_TIMESTAMP
         );`;
         query += `CREATE TABLE IF NOT EXISTS Category(
@@ -103,12 +102,23 @@ class DB {
         price_from bigint,
         price_to bigint
         );`;
+        query += `CREATE TABLE IF NOT EXISTS Companion(
+        id SERIAL PRIMARY KEY,
+        id_user bigint NOT NULL,
+        FOREIGN KEY(id_user) REFERENCES Client(id) ON DELETE CASCADE,
+        id_companion bigint NOT NULL,
+        FOREIGN KEY(id_companion) REFERENCES Client(id) ON DELETE CASCADE,
+        token varchar(50)
+        );`;
+
 
         query += `ALTER TABLE History
         ADD CONSTRAINT HistoryVacancy UNIQUE(id_user, id_vacancy, is_favorite);`;
         query += `ALTER TABLE History
         ADD CONSTRAINT HistoryResume UNIQUE(id_user, id_resume, is_favorite);`;
 
+
+        //type 1 - vacancy 0 - resume
 
         pool.query(query, (err: Error, _: any) => {
             if (err) console.log(err);
