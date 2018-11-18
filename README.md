@@ -3,7 +3,7 @@
 - git clone <Ссылка на ваш репозиторий>
 - cd Hackathon
 - git remote add upstream https://github.com/Muzikanto/Hackathon.git
-- git fetch upstream
+- git fetch  upstream
 - git checkout -b "Имя фичи"
 - - Делаете изменения
 - - git push origin "Имя фичи"
