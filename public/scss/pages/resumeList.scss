@@ -1,3 +1,5 @@
+$MainBackgroundColor: lightcyan;
+
 .Nav-Left {
   float: left;
 }
@@ -13,14 +15,15 @@
 }
 
 body {
-  background: black;
+  background: $MainBackgroundColor;
 }
 
 /*Логотип*/
 .Nav {
-  background: gray;
+  background: $MainBackgroundColor;
   height: 60px;
   line-height: 60px;
+  margin-left: 5%;
 }
 
 .Nav-LogoText {
@@ -200,23 +203,25 @@ body {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-gap: 8px;
 }
 
 .Filter {
-  background: #5da2a6;
+  background: rgba(218, 165, 32, 0.7);
   grid-column: span 1;
   display: flex;
   flex-direction: column;
 }
 
 .Filter-Title {
-  height: 40px;
+  height: 35px;
   font-size: 25px;
   background: white;
   text-align: center;
   color: #000;
   font-weight: bold;
   font-family: Arial;
+  padding-top: 5px;
 }
 
 .Filter-Scroll {
@@ -224,38 +229,59 @@ body {
   height: 200px;
   padding-top: 15px;
   box-sizing: border-box;
-  p {
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
+  background: rgba(218, 165, 32, 0.7);
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  > div {
+    > p {
+      font-size: 25px;
+      display: inline-block;
+    }
+    > input {
+      margin-left: 5px;
+      display: inline-block;
+    }
   }
 }
 
 .Filter-Second {
   height: 70px;
+  margin-bottom: 4px;
+  background-color: rgba(218, 165, 32, 0.7);
   > div {
     border-bottom: solid 2px white;
     border-top: solid 2px white;
     line-height: 70px;
     > button {
       height: 40px;
-      font-size: 25px;
+      width: calc(127px - 7.5px);
+      font-size: 20px;
       background: white;
-      text-align: center;
+      text-align: left;
       color: #000;
       font-weight: bold;
       font-family: Arial;
+      border: none;
+      padding-left: 7.5px;
+    }
+    button:focus{
+      outline:none;
     }
     > a {
       margin-left: 15px;
       color: white;
+      text-decoration: underline;
     }
   }
 }
 
 .Filter-ContainerButtons {
+  background: rgba(218, 165, 32, 0.7);
+  border-top: solid 2px white;
+  text-align: center;
   > button {
-    width: 100%;
+    width: 90%;
     height: 70px;
     font-size: 20px;
     background: white;
@@ -263,20 +289,28 @@ body {
     color: #000;
     font-weight: bold;
     font-family: Arial;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5px;
+    border: none;
+  }
+  button:focus{
+    outline:none;
   }
   >img{
     height: 40px;
     width: 40px;
     background: green;
+    margin-top: 5px;
   }
 }
 
 .ListResume {
-  background: #51a662;
   grid-column: span 3;
   > .ListResume-Header{
     height: 80px;
     width: 100%;
+
   }
   > .ListResume-Content{
     width: 100%;
@@ -284,3 +318,37 @@ body {
   }
 }
 
+#containerListPages {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  > button {
+    height: 30%;
+    width: 63px;
+    background-color: transparent;
+    margin: 0 1px;
+    border: none;
+  }
+  button:focus {
+    outline: none;
+  }
+  > div {
+    height:30%;
+    background-color: #ffffff;
+    margin: 0 1px;
+    width: 20px;
+    text-align: center;
+    > button {
+      background-color: #ffffff;
+      border: none;
+      height: 100%;
+      width: 100%;
+    }
+
+    button:focus {
+      outline: none;
+      border: solid 2px #daa520;
+      font-weight: bold;
+    }
+  }
+}
